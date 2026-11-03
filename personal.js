@@ -60,7 +60,10 @@
       var sel = sec.querySelector('[data-test^="PlanItem-"][data-selected="true"]') || document.querySelector('[data-test^="PlanItem-"][data-selected="true"]');
       var o = OF[sel ? sel.getAttribute('data-test') : 'PlanItem-Plano-de-4-Semanas'] || OF['PlanItem-Plano-de-4-Semanas'];
       fb('track', 'InitiateCheckout', { currency: 'BRL', value: o[1] });
-      location.href = 'https://pay.cakto.com.br/' + o[0] + location.search;
+      var url = 'https://pay.cakto.com.br/' + o[0] + location.search;
+      // painel de rastreio: registra a ida ao checkout e leva a sessão (alsid) e as utm para a venda voltar ligada à visita
+      if (window.alCheckout) url = window.alCheckout(url, { pmotdrk: '7d', '38ynh82': '28d', qjk7tw4: '90d' }[o[0]]);
+      location.href = url;
     }, true);
   }
 
