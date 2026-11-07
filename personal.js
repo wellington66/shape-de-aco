@@ -124,7 +124,25 @@
       var cat = imc < 18.5 ? 0 : imc < 25 ? 1 : imc < 30 ? 2 : 3;
       $$('[class*="bmi-scale_scaleValue"]').forEach(function (p, k) { p.classList.toggle('bmi-scale_isSelected__QKL23', k === cat); });
       var note = $('[class*="bmi-note_container"]'); if (note && cat < 2) note.style.display = 'none';
+      // celular: balão "Você: X" não pode sair do cartão (IMC muito alto ou muito baixo)
+      var box = $('[class*="bmi-scale_container"]'), lab = $('[class*="bmi-scale_sliderLabel"]');
+      var prenderBalao = function () {
+        if (!box || !lab) return;
+        var W = box.clientWidth, lw = lab.offsetWidth, centro = W * pos / 100;
+        var esq = Math.max(0, Math.min(W - lw, centro - lw / 2));
+        lab.style.setProperty('left', (esq - (centro - 8)) + 'px', 'important');
+        lab.style.setProperty('transform', 'none', 'important');
+        lab.style.setProperty('transition', 'opacity .7s ease-in-out 3s', 'important');
+      };
+      prenderBalao(); setTimeout(prenderBalao, 300); window.addEventListener('resize', prenderBalao);
     }
+    // celular: as 4 faixas (Abaixo do peso / Normal / Acima do peso / Obeso) cabem numa linha só
+    var st = document.createElement('style');
+    st.textContent = '[class*="bmi-scale_scaleValue"]{white-space:nowrap;word-break:normal!important;font-size:clamp(9.5px,3.1vw,12px)!important;letter-spacing:-.1px}' +
+      // celular estreito: "Ectomorfo"/"Condicionamento" sem quebrar no meio da palavra
+      '[class*="bmi-block-list_list"] *{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}' +
+      '@media (max-width:400px){[class*="bmi-block-list_list"]{min-width:165px}[class*="bmi-block_image"]{max-width:105px!important}}';
+    document.head.appendChild(st);
     txt(function (v) { var t = v.trim();
       if (t === 'Ectomorfo') return v.replace(t, bio); if (t === 'Sedentário') return v.replace(t, vida);
       if (t === 'Avançado') return v.replace(t, nivel); if (t === 'Rápido, dificuldade para ganhar músculo') return v.replace(t, meta); });
