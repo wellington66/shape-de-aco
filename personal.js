@@ -1,4 +1,4 @@
-/* Shape de Aço: guarda as respostas e personaliza as telas */
+/* Desafio Força de Aço: guarda as respostas e personaliza as telas */
 (function () {
   var kind = document.body.getAttribute('data-replica-kind') || '';
   var A = {}; try { A = JSON.parse(localStorage.getItem('sda') || '{}'); } catch (e) {}
@@ -39,11 +39,35 @@
   if (!LOCAL) {
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1566100141500586'); fbq('track', 'PageView');
-    if (kind === 'checkoutPersonalized') fbq('track', 'ViewContent', { content_name: 'Shape de Aço - checkout', currency: 'BRL', value: 29.90 });
+    if (kind === 'checkoutPersonalized') fbq('track', 'ViewContent', { content_name: 'Desafio Força de Aço - checkout', currency: 'BRL', value: 29.90 });
   }
   document.addEventListener('click', function (e) {
-    if (/email/.test(kind) && e.target.closest('[data-test*="goNext"]')) fb('track', 'Lead');
+    if (/email/.test(kind) && e.target.closest('[data-test*="goNext"]')) { fb('track', 'Lead'); ga('event', 'generate_lead', { currency: 'BRL', value: 0 }); cl('event', 'lead'); }
   }, true);
+
+  // ---- Google Analytics 4 (G-9DZ4FVST4X) + Microsoft Clarity (z9hm23z554); não disparam em teste local ----
+  // etapa do funil (meta al-passo: "NN|título") vira etiqueta no Clarity
+  var passo = (document.querySelector('meta[name="al-passo"]') || {}).content || '';
+  var etapa = passo ? ('0' + passo.split('|')[0]).slice(-2) + ' ' + passo.split('|').slice(1).join('|') : document.title;
+  var qs = new URLSearchParams(location.search);
+  function ga() { if (window.gtag) window.gtag.apply(null, arguments); }
+  function cl() { if (window.clarity) window.clarity.apply(null, arguments); }
+  if (!LOCAL) {
+    var gs = document.createElement('script'); gs.async = true; gs.src = 'https://www.googletagmanager.com/gtag/js?id=G-9DZ4FVST4X'; document.head.appendChild(gs);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    gtag('js', new Date());
+    // a tag do Google manda o page_view sozinha (com o <title>, igual em todas); a etapa aparece pelo caminho (p05.html...)
+    gtag('config', 'G-9DZ4FVST4X');
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "z9hm23z554");
+    // etiquetas do Clarity: filtrar gravações e mapas de calor por etapa, origem e campanha
+    cl('set', 'etapa', etapa);
+    ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content'].forEach(function (k) { if (qs.get(k)) cl('set', k, qs.get(k)); });
+    if (kind === 'checkoutPersonalized') {
+      ga('event', 'view_item', { currency: 'BRL', value: 29.90, items: [{ item_id: '38ynh82', item_name: 'Desafio Força de Aço - 28 dias', price: 29.90 }] });
+      cl('event', 'viu_checkout');
+    }
+  }
 
   // ---- checkout: botões levam à oferta da Cakto do plano escolhido ----
   if (kind === 'checkoutPersonalized') {
@@ -63,7 +87,14 @@
       var url = 'https://pay.cakto.com.br/' + o[0] + location.search;
       // painel de rastreio: registra a ida ao checkout e leva a sessão (alsid) e as utm para a venda voltar ligada à visita
       if (window.alCheckout) url = window.alCheckout(url, { pmotdrk: '7d', '38ynh82': '28d', qjk7tw4: '90d' }[o[0]]);
-      location.href = url;
+      var plano = { pmotdrk: '7 dias', '38ynh82': '28 dias', qjk7tw4: '90 dias' }[o[0]];
+      cl('set', 'plano', plano); cl('event', 'clicou_checkout');
+      // GA manda por beacon; o callback (ou 800 ms) garante o envio antes de sair para a Cakto
+      var foi = false; function ir() { if (!foi) { foi = true; location.href = url; } }
+      if (window.gtag && !LOCAL) {
+        gtag('event', 'begin_checkout', { currency: 'BRL', value: o[1], items: [{ item_id: o[0], item_name: 'Desafio Força de Aço - ' + plano, price: o[1] }], transport_type: 'beacon', event_callback: ir });
+        setTimeout(ir, 800);
+      } else ir();
     }, true);
   }
 
@@ -110,8 +141,16 @@
   }
   if (kind === 'singleSelect_21673') txt(function (v) { return v.replace('até 9 de novembro', 'até ' + longa(fim)); });
   if (kind === '/pt/progress-graph/default') txt(function (v) { return v.trim() === 'Teste' ? v.replace('Teste', A.nome || 'Atleta') : v; });
+  if (kind === '/pt/progress-graph/default') txt(function (v) { return v.trim() === 'Perfeito para iniciantes' ? v.replace('Perfeito para iniciantes', 'Feito para o nível ' + nivel) : v; });
   if (kind === 'checkoutPersonalized') {
     var cur = $$('[data-test="conditionalInfo__infoValue infoValue--block_current"]');
     if (cur[1]) cur[1].textContent = nivel;
+    if (A.nome) { var h = $('[data-test="beforeAfterResultsSection__heading"]'); if (h) h.textContent = A.nome + ', seu desafio de 28 dias começa hoje'; }
+    // FAQ abre e fecha ao tocar na pergunta
+    document.addEventListener('click', function (e) {
+      var q = e.target.closest('[data-test^="faqItem__question"]'); if (!q) return;
+      var it = q.closest('[data-test="faq__item"]'), ab = !it.classList.contains('faq-item_faqItemOpened__fTPGw');
+      it.classList.toggle('faq-item_faqItemOpened__fTPGw', ab); it.classList.toggle('faq-item_faqItem__bV4M6', !ab);
+    });
   }
 })();
