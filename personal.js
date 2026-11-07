@@ -163,7 +163,7 @@
   if (kind === 'checkoutPersonalized') {
     var cur = $$('[data-test="conditionalInfo__infoValue infoValue--block_current"]');
     if (cur[1]) cur[1].textContent = nivel;
-    if (A.nome) { var h = $('[data-test="beforeAfterResultsSection__heading"]'); if (h) h.textContent = A.nome + ', seu desafio de 28 dias começa hoje'; }
+    if (A.nome) { var h = $('[data-test="beforeAfterResultsSection__heading"]'); if (h) h.innerHTML = String(A.nome).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }) + ', seu desafio de 28 dias de <span style="color:var(--themeAccentColor)">calistenia militar</span> começa hoje'; }
     // FAQ abre e fecha ao tocar na pergunta
     document.addEventListener('click', function (e) {
       var q = e.target.closest('[data-test^="faqItem__question"]'); if (!q) return;
