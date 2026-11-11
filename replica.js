@@ -79,7 +79,7 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36];
         markOption(opt, !($('[class*="option-tile"]', opt) || opt).classList.contains(SEL_TILE));
       } else {
         $$('[data-test*="__option "]').forEach(function (o) { markOption(o, o === opt); });
-        if (!$('[data-test*="goNext"]') || /singleSelect/.test(kind)) setTimeout(next, 300);
+        if (!$('[data-test*="goNext"]') || /singleSelect/.test(kind)) setTimeout(next, 120);
       }
       return;
     }

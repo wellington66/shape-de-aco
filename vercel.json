@@ -2,5 +2,10 @@
   "redirects": [
     { "source": "/ig", "destination": "/?utm_source=instagram&utm_medium=bio&utm_campaign=perfil-thiago", "permanent": false },
     { "source": "/fb", "destination": "/?utm_source=facebook&utm_medium=pagina", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/marca/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }] },
+    { "source": "/(.*)\\.(css|js)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }] }
   ]
 }
