@@ -1,4 +1,4 @@
-/* Desafio Força de Aço: guarda as respostas e personaliza as telas */
+/* Desafio Treino de Aço: guarda as respostas e personaliza as telas */
 (function () {
   var kind = document.body.getAttribute('data-replica-kind') || '';
   var A = {}; try { A = JSON.parse(localStorage.getItem('sda') || '{}'); } catch (e) {}
@@ -39,7 +39,7 @@
   if (!LOCAL) {
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1566100141500586'); fbq('track', 'PageView');
-    if (kind === 'checkoutPersonalized') fbq('track', 'ViewContent', { content_name: 'Desafio Força de Aço - checkout', currency: 'BRL', value: 29.90 });
+    if (kind === 'checkoutPersonalized') fbq('track', 'ViewContent', { content_name: 'Desafio Treino de Aço - checkout', currency: 'BRL', value: 29.90 });
   }
   document.addEventListener('click', function (e) {
     if (/email/.test(kind) && e.target.closest('[data-test*="goNext"]')) { fb('track', 'Lead'); ga('event', 'generate_lead', { currency: 'BRL', value: 0 }); cl('event', 'lead'); }
@@ -64,7 +64,7 @@
     cl('set', 'etapa', etapa);
     ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content'].forEach(function (k) { if (qs.get(k)) cl('set', k, qs.get(k)); });
     if (kind === 'checkoutPersonalized') {
-      ga('event', 'view_item', { currency: 'BRL', value: 29.90, items: [{ item_id: '38ynh82', item_name: 'Desafio Força de Aço - 28 dias', price: 29.90 }] });
+      ga('event', 'view_item', { currency: 'BRL', value: 29.90, items: [{ item_id: '38ynh82', item_name: 'Desafio Treino de Aço - 28 dias', price: 29.90 }] });
       cl('event', 'viu_checkout');
     }
   }
@@ -92,7 +92,7 @@
       // GA manda por beacon; o callback (ou 800 ms) garante o envio antes de sair para a Cakto
       var foi = false; function ir() { if (!foi) { foi = true; location.href = url; } }
       if (window.gtag && !LOCAL) {
-        gtag('event', 'begin_checkout', { currency: 'BRL', value: o[1], items: [{ item_id: o[0], item_name: 'Desafio Força de Aço - ' + plano, price: o[1] }], transport_type: 'beacon', event_callback: ir });
+        gtag('event', 'begin_checkout', { currency: 'BRL', value: o[1], items: [{ item_id: o[0], item_name: 'Desafio Treino de Aço - ' + plano, price: o[1] }], transport_type: 'beacon', event_callback: ir });
         setTimeout(ir, 800);
       } else ir();
     }, true);
