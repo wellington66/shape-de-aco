@@ -71,7 +71,7 @@
 
   // ---- checkout: botões levam à oferta da Cakto do plano escolhido ----
   if (kind === 'checkoutPersonalized') {
-    var OF = { 'PlanItem-Teste-de-1-semana': ['pmotdrk', 19.90], 'PlanItem-Plano-de-4-Semanas': ['38ynh82', 29.90], 'PlanItem-Plano-de-12-Semanas': ['qjk7tw4', 39.90] };
+    var OF = { 'PlanItem-Teste-de-1-semana': ['pmotdrk', 19.90], 'PlanItem-Plano-de-4-Semanas': ['38ynh82', 29.90], 'PlanItem-Plano-de-12-Semanas': ['qjk7tw4', 49.90] };
     document.addEventListener('click', function (e) {
       if (e.target.closest('[data-test="header__ctaButton"]')) {
         e.preventDefault(); e.stopPropagation();
