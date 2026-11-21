@@ -126,9 +126,9 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36];
     }
     if (svg) {
       svg.style.touchAction = 'none'; svg.style.cursor = 'pointer';
-      svg.addEventListener('pointerdown', function (e) { down = true; if (anim) anim.style.display = 'none'; scratch(e); });
+      svg.addEventListener('pointerdown', function (e) { down = true; if (anim) anim.style.display = 'none'; scratch(e); setTimeout(finish, 1800); });
       svg.addEventListener('pointermove', scratch);
-      window.addEventListener('pointerup', function () { down = false; if (pts > 12) finish(); });
+      window.addEventListener('pointerup', function () { if (down && pts >= 1) setTimeout(finish, 250); down = false; });
     }
   }
 
