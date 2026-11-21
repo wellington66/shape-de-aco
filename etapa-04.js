@@ -8,13 +8,13 @@
   var experienced = experience === 0;
   var title = document.querySelector('[data-test="infoPage__title"]');
   var copy = document.getElementById('sda-experience-copy');
-  title.textContent = experienced ? 'Mais força e definição, sem academia.' : 'Comece do zero. Construa um corpo mais forte.';
+  title.textContent = experienced ? 'Não foi falta de esforço. Foi o método.' : 'Você começa do jeito certo.';
   copy.textContent = experienced
-    ? 'O Desafio Treino de Aço funciona para todos os níveis. A partir daqui, vamos conhecer seu nível atual e o que você quer conquistar com os treinos.'
-    : 'O Desafio Treino de Aço funciona para todos os níveis. Conheça seu ponto de partida e avance no seu ritmo.';
+    ? 'Horas em um aparelho de cada vez cansam o corpo e pouco mudam a barriga. A calistenia militar usa o corpo inteiro de uma vez: 15 minutos por dia, em casa.'
+    : 'Você não precisa de academia nem de esteira. Com calistenia militar o corpo inteiro treina em 15 minutos por dia, em casa e no seu ritmo.';
   // No acesso direto, evita presumir experiência ou ausência dela.
   if (experience !== 0 && experience !== 1) {
-    title.textContent = 'Você vai arrasar!';
+    title.textContent = 'Você começa do jeito certo.';
     copy.textContent = 'O Desafio Treino de Aço funciona para todos os níveis, do iniciante ao avançado.';
   }
 })();

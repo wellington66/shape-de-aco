@@ -1,4 +1,4 @@
-window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36];
+window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36, 6, 13, 14, 15, 21, 23, 24, 25, 27, 28, 29, 30, 31, 33, 34, 35, 40, 42, 43];
 /* Navegação da réplica: liga as telas capturadas em sequência */
 (function () {
   var step = parseInt(document.body.getAttribute('data-replica-step'), 10);
