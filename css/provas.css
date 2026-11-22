@@ -40,3 +40,16 @@
 #pv-lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
 #pv-lb button{position:absolute;top:12px;right:14px;width:42px;height:42px;border-radius:50%;border:0;background:#FF5B1F;color:#0B0C0E;font-size:26px;font-weight:800;line-height:1}
 .pv-estudo{width:100%;border-radius:14px;border:1px solid #2a2d33}
+
+#sda-prova-alunos .pv-slide{flex-basis:80%}
+#sda-bonus-comunidade .pv-slide,#sda-prova-whats .pv-slide{flex-basis:56%}
+.pv h3{font-size:23px}
+.pv-quotes{margin-top:18px}
+.pv-banner{margin-bottom:22px}
+
+.pv-head{margin-top:22px;margin-bottom:30px;text-align:center}
+.pv-head h2{font-size:25px;line-height:1.2;font-weight:800;margin:0 0 10px}
+.pv-head h2 em{font-style:normal;color:#FF5B1F}
+.pv-head p{font-size:15px;line-height:1.45;color:#C9CED5;margin:0 0 16px}
+.pv-cta{display:block;background:#FF5B1F;color:#0B0C0E;font-weight:800;font-size:16px;text-decoration:none;padding:15px 12px;border-radius:12px}
+html{scroll-behavior:smooth}
