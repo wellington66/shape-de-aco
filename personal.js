@@ -25,7 +25,13 @@
         else if (/^questionCurrentWeight/.test(kind)) A.w = num(v);
         else if (/^questionTargetWeight/.test(kind)) A.g = num(v);
         else if (/^questionAge/.test(kind)) A.anos = num(v);
-        else if (/email/.test(kind)) A.email = v.trim();
+        else if (/email/.test(kind)) {
+          A.email = v.trim();
+          // guarda o e-mail para recuperar a venda (Recupera Pix / lista de leads)
+          if (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A.email)) {
+            try { fetch('https://recupera-pix-eosin.vercel.app/api/lead', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ email: A.email, nome: A.nome || '', utm: location.search.slice(0, 400) }) }).catch(function () {}); } catch (e) {}
+          }
+        }
         else if (/funnel-prompts/.test(kind)) A.nome = v.trim().split(' ')[0];
         save();
       }
