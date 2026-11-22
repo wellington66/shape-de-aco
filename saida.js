@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   if ((document.body.getAttribute('data-replica-kind') || '') !== 'checkoutPersonalized') return;
-  var BASE = 'https://pay.kirvano.com/ff03c33f-12cd-48dd-8f6f-d5687c28c0f5';           // plano de 28 dias (checkout principal)
+  var BASE = 'https://pay.cakto.com.br/38ynh82';           // plano de 28 dias (checkout principal)
   var OFERTAS = {
     up:   { img: 'assets/saida/saida-up.png', cupom: 'VOLTA17', btn: 'QUERO OS 28 DIAS POR R$ 24,90', nao: 'Não quero, continuar com o plano de 7 dias' },
     s24:  { cupom: 'VOLTA17', de: 'R$ 29,90', por: 'R$ 24,90', t: 'Espere, não saia ainda!', p: 'A gente quer te ajudar a começar o seu desafio. Por isso liberamos um <b>desconto especial</b> só para você, agora.', btn: 'QUERO MEU DESCONTO ESPECIAL', nao: 'Não, obrigado' },
