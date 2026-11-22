@@ -53,3 +53,11 @@
 .pv-head p{font-size:15px;line-height:1.45;color:#C9CED5;margin:0 0 16px}
 .pv-cta{display:block;background:#FF5B1F;color:#0B0C0E;font-weight:800;font-size:16px;text-decoration:none;padding:15px 12px;border-radius:12px}
 html{scroll-behavior:smooth}
+
+.pv-sep{max-width:390px;margin:34px auto 22px;padding:0 16px;display:flex;align-items:center;gap:12px;font-family:var(--font),sans-serif}
+.pv-sep:before,.pv-sep:after{content:"";flex:1;height:1px;background:#2a2d33}
+.pv-sep span{font-size:12px;font-weight:800;letter-spacing:.12em;color:#FF5B1F;white-space:nowrap}
+.pv-fold{position:relative;max-height:330px;overflow:hidden;border-radius:14px;border:1px solid #2a2d33}
+.pv-fold:after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,#0B0C0E);pointer-events:none}
+.pv-fold .pv-estudo{border:0;border-radius:0}
+.pv-hint{margin-top:10px}
