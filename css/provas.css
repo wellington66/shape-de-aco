@@ -39,3 +39,4 @@
 #pv-lb.on{display:flex}
 #pv-lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
 #pv-lb button{position:absolute;top:12px;right:14px;width:42px;height:42px;border-radius:50%;border:0;background:#FF5B1F;color:#0B0C0E;font-size:26px;font-weight:800;line-height:1}
+.pv-estudo{width:100%;border-radius:14px;border:1px solid #2a2d33}
