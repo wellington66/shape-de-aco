@@ -18,3 +18,18 @@ button:focus-visible,a:focus-visible { outline:3px solid #FF5B1F; outline-offset
 [data-test="firstPage__legal"] a { color:#C8CED6; text-decoration:underline; text-underline-offset:3px; }
 @media(min-width:461px) { html { background:#050506; } body { max-width:430px; margin:0 auto !important; box-shadow:0 0 0 1px #202329; } }
 @media(prefers-reduced-motion:reduce) { [data-age-index] { transition:none; } }
+
+/* Entrada direta na pergunta de idade: cards maiores e fáceis de tocar. */
+.stage-one-chk { display:flex; justify-content:center; flex-wrap:wrap; gap:4px 10px; margin:0 0 8px; font-size:12px; font-weight:700; color:#E8EBEF; }
+.stage-one-chk span:before { content:"✓ "; color:#FF5B1F; }
+[data-test="firstPage__cards"] { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:none !important; grid-auto-rows:auto !important; gap:12px !important; height:auto !important; }
+[data-test="firstPage__cards"] > .first-page-default-variant-content_divider__7G1er,
+[data-test="firstPage__cards"] > p { grid-column:1 / -1; }
+[data-age-index] { min-height:225px; height:auto !important; border-radius:18px !important; -webkit-tap-highlight-color:rgba(255,91,31,.25); }
+[data-age-index]:active { transform:scale(.97); box-shadow:0 0 0 3px #FF5B1F; }
+[data-age-index] [data-test="firstPageCard__label"] { font-size:14px !important; font-weight:800 !important; line-height:1.2; white-space:nowrap; }
+[data-age-index] [data-test="firstPageCard__label"]::after { content:""; }
+[data-age-index] svg[data-icon="ChevronRightIcon"] { font-size:26px !important; flex:none; margin-left:4px; }
+[data-age-index] [class*="cardFooter"] { padding:12px 8px 12px 12px !important; border-radius:12px; }
+[data-age-index] { min-width:0; overflow:hidden; }
+[data-age-index] [data-test="firstPageCard__image"] { width:100% !important; height:100% !important; object-fit:cover; object-position:center top; }
