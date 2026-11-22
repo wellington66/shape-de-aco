@@ -100,14 +100,15 @@
     }, true);
   }
 
-  // ---- 2º toque no plano já marcado leva ao checkout dele (o 1º toque só marca; a seleção é do replica.js) ----
+  // ---- 3º toque seguido no mesmo plano leva ao checkout dele (1º e 2º só marcam; a seleção é do replica.js) ----
   if (kind === 'checkoutPersonalized') {
-    var ultimoPlano = null;
+    var ultimoPlano = null, toques = 0;
     document.addEventListener('click', function (e) {
       var pl = e.target.closest('[data-test^="PlanItem-"]'); if (!pl) return;
       var id = pl.getAttribute('data-test');
-      if (ultimoPlano !== id) { ultimoPlano = id; return; }    // 1º toque: o replica.js marca o plano
-      e.preventDefault(); e.stopImmediatePropagation();
+      if (ultimoPlano !== id) { ultimoPlano = id; toques = 1; return; }    // 1º toque: o replica.js marca o plano
+      if (++toques < 3) return;                                          // 2º toque: só marca
+      toques = 0; e.preventDefault(); e.stopImmediatePropagation();
       var bt = $('[data-test="checkout__mainButton"]'); if (bt) bt.click();   // mesmo caminho do botão (aviso do 7 dias, GA, painel, Cakto)
     }, true);
     var tm = document.createElement('style'); tm.textContent = '[data-test^="PlanItem-"],[data-test^="checkout"][data-test$="Button"],[data-test="header__ctaButton"]{touch-action:manipulation}'; document.head.appendChild(tm);
