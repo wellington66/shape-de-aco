@@ -84,7 +84,7 @@
       var sel = sec.querySelector('[data-test^="PlanItem-"][data-selected="true"]') || document.querySelector('[data-test^="PlanItem-"][data-selected="true"]');
       var o = OF[sel ? sel.getAttribute('data-test') : 'PlanItem-Plano-de-4-Semanas'] || OF['PlanItem-Plano-de-4-Semanas'];
       // InitiateCheckout fica só com a Cakto (dispara ao abrir o checkout); disparar aqui também contava em dobro
-      var url = 'https://pay.cakto.com.br/' + o[0] + location.search;
+      var url = 'https://pay.cakto.com.br/' + o[0] + ({ pmotdrk: '_1355542', qjk7tw4: '_1355543' }[o[0]] || '') + location.search;   // 7 e 90 dias abrem o checkout próprio (com o pop-up de saída do plano)
       // painel de rastreio: registra a ida ao checkout e leva a sessão (alsid) e as utm para a venda voltar ligada à visita
       if (window.alCheckout) url = window.alCheckout(url, { pmotdrk: '7d', '38ynh82': '28d', qjk7tw4: '90d' }[o[0]]);
       var plano = { pmotdrk: '7 dias', '38ynh82': '28 dias', qjk7tw4: '90 dias' }[o[0]];
