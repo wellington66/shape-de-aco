@@ -48,7 +48,7 @@
 
   // 1) plano de 7 dias: antes de ir ao checkout, oferece os 28 dias
   window.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('[data-test="checkout__mainButton"], [data-test="checkout__bottomButton"]');
+    var b = e.target.closest && e.target.closest('[data-test="header__ctaButton"], [data-test="checkout__mainButton"], [data-test="checkout__bottomButton"]');
     if (!b || ss('sda_up') === '1') return;
     var sec = b.closest('[data-test^="checkoutChoosePlan__base"]') || document;
     var sel = sec.querySelector('[data-test^="PlanItem-"][data-selected="true"]') || document.querySelector('[data-test^="PlanItem-"][data-selected="true"]');

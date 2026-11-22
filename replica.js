@@ -58,7 +58,7 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36, 6, 13, 14, 15, 21, 23, 24, 25,
   })();
   function selectPlan(card) {
     planCards.forEach(function (c) {
-      var on = c === card;
+      var on = c.getAttribute('data-test') === card.getAttribute('data-test');   // as duas listas de planos ficam iguais
       c.setAttribute('data-selected', on ? 'true' : 'false');
       selPairs.forEach(function (p) {
         [c].concat($$('.' + p[0], c)).forEach(function (el) { if (el.classList.contains(p[0])) el.classList.toggle(p[1], on); });

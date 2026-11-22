@@ -73,11 +73,7 @@
   if (kind === 'checkoutPersonalized') {
     var OF = { 'PlanItem-Teste-de-1-semana': ['pmotdrk', 19.90], 'PlanItem-Plano-de-4-Semanas': ['38ynh82', 29.90], 'PlanItem-Plano-de-12-Semanas': ['qjk7tw4', 49.90] };
     document.addEventListener('click', function (e) {
-      if (e.target.closest('[data-test="header__ctaButton"]')) {
-        e.preventDefault(); e.stopPropagation();
-        var lst = $('[data-test="checkoutChoosePlan__planListContainer"]'); if (lst) lst.scrollIntoView({ behavior: 'smooth', block: 'center' }); return;
-      }
-      var b = e.target.closest('[data-test="checkout__mainButton"], [data-test="checkout__bottomButton"]');
+      var b = e.target.closest('[data-test="header__ctaButton"], [data-test="checkout__mainButton"], [data-test="checkout__bottomButton"]');
       if (!b) return;
       e.preventDefault(); e.stopPropagation();
       var sec = b.closest('[data-test^="checkoutChoosePlan__base"]') || document;
@@ -96,6 +92,19 @@
         setTimeout(ir, 800);
       } else ir();
     }, true);
+  }
+
+  // ---- 2º toque no plano já marcado leva ao checkout dele (o 1º toque só marca; a seleção é do replica.js) ----
+  if (kind === 'checkoutPersonalized') {
+    var ultimoPlano = null;
+    document.addEventListener('click', function (e) {
+      var pl = e.target.closest('[data-test^="PlanItem-"]'); if (!pl) return;
+      var id = pl.getAttribute('data-test');
+      if (ultimoPlano !== id) { ultimoPlano = id; return; }    // 1º toque: o replica.js marca o plano
+      e.preventDefault(); e.stopImmediatePropagation();
+      var bt = $('[data-test="checkout__mainButton"]'); if (bt) bt.click();   // mesmo caminho do botão (aviso do 7 dias, GA, painel, Cakto)
+    }, true);
+    var tm = document.createElement('style'); tm.textContent = '[data-test^="PlanItem-"],[data-test^="checkout"][data-test$="Button"],[data-test="header__ctaButton"]{touch-action:manipulation}'; document.head.appendChild(tm);
   }
 
   // ---- derivados ----
