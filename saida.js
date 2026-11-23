@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   if ((document.body.getAttribute('data-replica-kind') || '') !== 'checkoutPersonalized') return;
-  var BASE = 'https://pay.cakto.com.br/38ynh82';           // plano de 28 dias (checkout principal)
+  var BASE = 'https://pay.wiapy.com/5jGsM3YvdZxi';         // plano de 28 dias (checkout principal, Wiapy)
   var OFERTAS = {
     up:   { img: 'assets/saida/saida-up.webp', cupom: 'VOLTA17', btn: 'QUERO OS 28 DIAS POR R$ 24,90', nao: 'Não quero, continuar com o plano de 7 dias' },
     s24:  { cupom: 'VOLTA17', de: 'R$ 29,90', por: 'R$ 24,90', t: 'Espere, não saia ainda!', p: 'A gente quer te ajudar a começar o seu desafio. Por isso liberamos um <b>desconto especial</b> só para você, agora.', btn: 'QUERO MEU DESCONTO ESPECIAL', nao: 'Não, obrigado' },
@@ -36,7 +36,9 @@
   document.head.appendChild(css);
 
   function irPara(of) {
-    var o = OFERTAS[of], url = BASE + '?coupon=' + o.cupom + (location.search ? '&' + location.search.slice(1) : '');
+    // Wiapy não aplica cupom pela URL: copia o código e o checkout pede para digitar no campo "Cupom de desconto"
+    var o = OFERTAS[of], url = BASE + (location.search ? '?' + location.search.slice(1) : '');
+    try { navigator.clipboard.writeText(o.cupom); } catch (e) {}
     if (window.alCheckout) url = window.alCheckout(url, '28d');   // só avisa o painel de rastreio (sessão e utm)
     location.href = url;
   }
@@ -48,6 +50,7 @@
     var topo = o.img ? '<img src="' + o.img + '" alt="Oferta do Desafio Treino de Aço">' :
       '<div class="tx"><small>TREINO DE AÇO · 28 DIAS</small><h2>' + o.t + '</h2><p>' + o.p + '</p><div class="pr"><s>' + o.de + '</s><strong>' + o.por + '</strong></div></div>';
     d.innerHTML = '<div class="bx"><button class="x" aria-label="Fechar">×</button>' + topo +
+      '<p style="margin:12px 16px 0;font:14px/1.4 Arial,Helvetica,sans-serif;color:#C9CED5">Seu cupom: <b style="color:#FF5B1F;letter-spacing:.06em">' + o.cupom + '</b><br>Cole no campo <b>Cupom de desconto</b> do checkout e toque em Aplicar.</p>' +
       '<button class="go">' + o.btn + '</button><button class="no">' + o.nao + '</button></div>';
     document.body.appendChild(d);
     function fechar(cont) { if (d.parentNode) d.parentNode.removeChild(d); aberto = false; ultimoFechar = Date.now(); if (cont && aoFechar) aoFechar(); }

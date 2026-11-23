@@ -86,7 +86,8 @@
       var sel = sec.querySelector('[data-test^="PlanItem-"][data-selected="true"]') || document.querySelector('[data-test^="PlanItem-"][data-selected="true"]');
       var o = OF[sel ? sel.getAttribute('data-test') : 'PlanItem-Plano-de-4-Semanas'] || OF['PlanItem-Plano-de-4-Semanas'];
       // InitiateCheckout fica só com a Cakto (dispara ao abrir o checkout); disparar aqui também contava em dobro
-      var url = 'https://pay.cakto.com.br/' + o[0] + ({ pmotdrk: '_1355542', qjk7tw4: '_1355543' }[o[0]] || '') + location.search;   // 7 e 90 dias abrem o checkout próprio (com o pop-up de saída do plano)
+      // checkout atual: Wiapy (um link por plano). Os códigos curtos antigos (pmotdrk, 38ynh82, qjk7tw4) continuam como chave interna do plano.
+      var url = 'https://pay.wiapy.com/' + { pmotdrk: 'wnqwKqL0b3fc', '38ynh82': '5jGsM3YvdZxi', qjk7tw4: 'LFVM1ODpEndQ' }[o[0]] + location.search;
       // painel de rastreio: registra a ida ao checkout e leva a sessão (alsid) e as utm para a venda voltar ligada à visita
       if (window.alCheckout) url = window.alCheckout(url, { pmotdrk: '7d', '38ynh82': '28d', qjk7tw4: '90d' }[o[0]]);
       var plano = { pmotdrk: '7 dias', '38ynh82': '28 dias', qjk7tw4: '90 dias' }[o[0]];
