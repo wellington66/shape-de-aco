@@ -7,42 +7,62 @@
   var kg = function (n) { return Math.round(n) + ' kg'; };
   var bio = ['Ectomorfo', 'Mesomorfo', 'Endomorfo'][A['singleSelect_21642']];
   var fx = A['singleSelect_21644'], nivel = fx == null ? 'Iniciante' : ['Iniciante', 'Iniciante', 'Intermediário', 'Avançado'][fx];
-  var itens = [];
-  if (A.w && A.g) itens.push(['Seu objetivo', kg(A.w) + ' → ' + kg(A.g)]);
-  else if (A.g) itens.push(['Peso-alvo', kg(A.g)]);
-  if (A.h) itens.push(['Altura', Math.round(A.h) + ' cm']);
-  itens.push(['Seu nível', nivel]);
-  if (bio) itens.push(['Seu biotipo', bio]);
-  itens.push(['Duração', '28 dias']);
-  itens.push(['Treino por dia', '10 a 25 min']);
   var nome = A.nome ? esc(A.nome) : '';
+  var imc = (A.h && A.w) ? A.w / Math.pow(A.h / 100, 2) : 0;
+  var faixa = !imc ? '' : imc < 18.5 ? 'abaixo do ideal' : imc < 25 ? 'na faixa normal' : imc < 30 ? 'acima do ideal' : 'acima do ideal';
+  var passos = ['Seu corpo e seu biotipo', 'Seu peso e sua meta', 'Seu nível de condicionamento', 'Seu tempo e rotina'];
+  var lido = [];
+  if (A.w && A.g) lido.push(['Peso', kg(A.w) + ' → meta ' + kg(A.g)]);
+  if (imc) lido.push(['IMC', imc.toFixed(1).replace('.', ',') + ' (' + faixa + ')']);
+  if (bio) lido.push(['Biotipo', bio]);
+  lido.push(['Nível', nivel]);
+  var motivo = bio === 'Endomorfo' ? 'Seu corpo acumula gordura com facilidade, então o plano combina queima de gordura com força.' :
+    bio === 'Ectomorfo' ? 'Seu corpo tem dificuldade de ganhar massa, então o plano foca em força e músculo.' :
+    bio === 'Mesomorfo' ? 'Seu corpo responde rápido ao treino, então o plano acelera definição e força.' :
+    'Cada corpo responde de um jeito, por isso o plano é ajustado ao seu.';
   var css = '.sda-hero{width:100%;box-sizing:border-box;padding:0 4px;font-family:var(--font),sans-serif;color:#E8EBEF}' +
     '.sda-hero *{box-sizing:border-box}' +
-    '.sda-sel{display:flex;align-items:center;gap:8px;justify-content:center;background:rgba(255,91,31,.12);border:1px solid rgba(255,91,31,.45);color:#FFB08F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:700;letter-spacing:.3px;margin:4px auto 14px;width:max-content;max-width:100%}' +
-    '.sda-sel i{width:8px;height:8px;border-radius:50%;background:#3AAE92;box-shadow:0 0 0 4px rgba(58,174,146,.25)}' +
+    '.sda-sel{display:flex;align-items:center;gap:8px;justify-content:center;background:rgba(58,174,146,.14);border:1px solid rgba(58,174,146,.5);color:#8FE0C8;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:700;letter-spacing:.3px;margin:4px auto 12px;width:max-content;max-width:100%}' +
+    '.sda-t{font-size:23px;line-height:1.2;font-weight:800;text-align:center;margin:0 0 8px}.sda-t em{font-style:normal;color:#FF5B1F}' +
+    '.sda-s{font-size:14.5px;line-height:1.45;color:#A9B0B9;text-align:center;margin:0 4px 14px}.sda-s b{color:#E8EBEF}' +
+    '.sda-ck{list-style:none;margin:0 0 14px;padding:12px 14px;background:#16181C;border:1px solid #2a2d33;border-radius:16px}' +
+    '.sda-ck li{display:flex;align-items:center;gap:10px;font-size:14px;padding:5px 0}' +
+    '.sda-ck li:before{content:"✓";flex:none;width:20px;height:20px;border-radius:50%;background:#3AAE92;color:#0B0C0E;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center}' +
+    '.sda-card{background:#16181C;border:1px solid #2a2d33;border-radius:16px;padding:14px;margin-bottom:14px}' +
+    '.sda-card h4{margin:0 0 10px;font-size:15px;font-weight:800;text-align:center}.sda-card h4 em{font-style:normal;color:#FF5B1F}' +
+    '.sda-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}' +
+    '.sda-grid div{background:#0B0C0E;border-radius:12px;padding:10px}.sda-grid small{display:block;font-size:11px;color:#A9B0B9;margin-bottom:2px}.sda-grid b{display:block;font-size:14px;font-weight:800;line-height:1.25}' +
+    '.sda-card p{margin:10px 0 0;font-size:13.5px;color:#C9CED5;text-align:center;line-height:1.45}' +
     '.sda-ba{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px}' +
     '.sda-ba figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#1A1C20;aspect-ratio:4/5}' +
     '.sda-ba img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 12%}' +
     '.sda-ba figcaption{position:absolute;left:8px;right:8px;bottom:8px;text-align:center;font-size:12px;font-weight:800;letter-spacing:.6px;padding:7px 4px;border-radius:10px;background:rgba(11,12,14,.82);color:#E8EBEF}' +
     '.sda-ba figure.dep{box-shadow:0 0 0 2px #FF5B1F}.sda-ba figure.dep figcaption{background:#FF5B1F;color:#0B0C0E}' +
     '.sda-ba .seta{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:#FF5B1F;color:#0B0C0E;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;z-index:2;border:3px solid #0B0C0E}' +
-    '.sda-plan{margin-top:12px;background:#16181C;border:1px solid #2a2d33;border-radius:16px;padding:14px}' +
-    '.sda-plan h4{margin:0 0 10px;font-size:15px;font-weight:800;text-align:center}' +
-    '.sda-plan h4 em{font-style:normal;color:#FF5B1F}' +
-    '.sda-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}' +
-    '.sda-grid div{background:#0B0C0E;border-radius:12px;padding:10px}' +
-    '.sda-grid small{display:block;font-size:11px;color:#A9B0B9;margin-bottom:2px}' +
-    '.sda-grid b{display:block;font-size:15px;font-weight:800;line-height:1.2}' +
-    '.sda-plan p{margin:10px 0 0;font-size:12.5px;color:#A9B0B9;text-align:center;line-height:1.4}';
+    '.sda-nt{font-size:11.5px;color:#7D858F;text-align:center;margin:8px 0 14px}' +
+    '.sda-inc{list-style:none;margin:0 0 14px;padding:0}.sda-inc li{display:flex;gap:10px;font-size:14px;line-height:1.4;padding:6px 0;border-bottom:1px solid #22252a}.sda-inc li:last-child{border:0}.sda-inc li:before{content:"→";color:#FF5B1F;font-weight:900}' +
+    '.sda-cta{display:block;width:100%;text-align:center;background:#FF5B1F;color:#0B0C0E;font-weight:800;font-size:16px;border-radius:24px;padding:15px 12px;text-decoration:none;margin-bottom:6px}' +
+    '.sda-fn{font-size:12px;color:#A9B0B9;text-align:center;margin:0 0 6px}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var box = document.createElement('div'); box.className = 'sda-hero';
-  box.innerHTML = '<div class="sda-sel"><i></i>PLANO PERSONALIZADO PRONTO</div>' +
-    '<div class="sda-ba"><figure><img src="assets/sda/sda-antes-b901f6.webp" alt="Antes"><figcaption>HOJE</figcaption></figure>' +
-    '<div class="seta">›</div>' +
+  box.innerHTML =
+    // A — atenção
+    '<div class="sda-sel">✓ ANÁLISE CONCLUÍDA</div>' +
+    '<h2 class="sda-t">' + (nome ? nome + ', seu' : 'Seu') + ' plano <em>personalizado</em> está pronto</h2>' +
+    '<p class="sda-s">Foi por isso que você respondeu as perguntas: <b>cada corpo é diferente</b>, e um treino igual para todo mundo não funciona. Veja o que analisamos:</p>' +
+    '<ul class="sda-ck">' + passos.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>' +
+    // I — interesse
+    '<div class="sda-card"><h4>O que suas respostas <em>revelaram</em></h4><div class="sda-grid">' +
+    lido.map(function (i) { return '<div><small>' + i[0] + '</small><b>' + esc(i[1]) + '</b></div>'; }).join('') +
+    '</div><p>' + motivo + '</p></div>' +
+    // D — desejo
+    '<h3 class="sda-t" style="font-size:19px">Onde esse plano leva você em <em>28 dias</em></h3>' +
+    '<div class="sda-ba"><figure><img src="assets/sda/sda-antes-b901f6.webp" alt="Antes"><figcaption>HOJE</figcaption></figure><div class="seta">›</div>' +
     '<figure class="dep"><img src="assets/sda/sda-depois-1db9e5.webp" alt="Depois"><figcaption>EM 28 DIAS</figcaption></figure></div>' +
-    '<div class="sda-plan"><h4>' + (nome ? nome + ', montamos' : 'Montamos') + ' o plano <em>com as suas respostas</em></h4><div class="sda-grid">' +
-    itens.map(function (i) { return '<div><small>' + i[0] + '</small><b>' + esc(i[1]) + '</b></div>'; }).join('') +
-    '</div><p>Treinos em vídeo, em casa e sem equipamento, no ritmo do seu nível.</p></div>';
+    '<p class="sda-nt">Imagem ilustrativa. Resultados variam de pessoa para pessoa.</p>' +
+    '<ul class="sda-inc"><li>Treinos em vídeo, em casa e sem equipamento</li><li>Ritmo ajustado ao seu nível: ' + nivel + '</li><li>De 10 a 25 minutos por dia, do dia 1 ao 28</li><li>Garantia de 30 dias: se não gostar, devolvemos o valor</li></ul>' +
+    // A — ação
+    '<a class="sda-cta" href="#oferta">Liberar o meu plano agora</a><p class="sda-fn">Seu plano fica reservado enquanto o tempo acima não zerar.</p>';
   Array.prototype.slice.call(hero.children).forEach(function (c) { c.style.display = 'none'; });
   hero.insertBefore(box, hero.firstChild);
 })();
