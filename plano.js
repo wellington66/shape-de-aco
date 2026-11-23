@@ -62,7 +62,23 @@
     '<p class="sda-nt">Imagem ilustrativa. Resultados variam de pessoa para pessoa.</p>' +
     '<ul class="sda-inc"><li>Treinos em vídeo, em casa e sem equipamento</li><li>Ritmo ajustado ao seu nível: ' + nivel + '</li><li>De 10 a 25 minutos por dia, do dia 1 ao 28</li><li>Garantia de 30 dias: se não gostar, devolvemos o valor</li></ul>' +
     // A — ação
-    '<a class="sda-cta" href="#oferta">Liberar o meu plano agora</a><p class="sda-fn">Seu plano fica reservado enquanto o tempo acima não zerar.</p>';
+    '<a class="sda-cta" href="#oferta">Quero meu plano personalizado</a><p class="sda-fn">Pagamento único · Acesso imediato · 30 dias de garantia</p>';
   Array.prototype.slice.call(hero.children).forEach(function (c) { c.style.display = 'none'; });
   hero.insertBefore(box, hero.firstChild);
+
+  // ---- ordem: primeiro o que ela recebe, depois as provas sociais; CTAs com texto melhor ----
+  var seps = Array.prototype.slice.call(document.querySelectorAll('.pv-sep')), tx = function (e) { return (e.textContent || '').trim(); };
+  var sRes = seps.filter(function (e) { return /RESULTADOS REAIS/.test(tx(e)); })[0];
+  var sRec = seps.filter(function (e) { return /O QUE VOCÊ RECEBE/.test(tx(e)); })[0];
+  var sPara = seps.filter(function (e) { return /PARA QUEM/.test(tx(e)); })[0];
+  var head = document.querySelector('.pv-head');
+  if (head) head.innerHTML = '<h2>Veja tudo o que <em>você vai receber</em></h2><p>Seu plano de 28 dias fica no celular assim que o pagamento for confirmado.</p>';
+  if (sRes && sRec && sPara && sRes.parentNode === sRec.parentNode) {
+    var grupo = [], n = sRec;
+    while (n && n !== sPara) { grupo.push(n); n = n.nextElementSibling; }
+    var cta = document.createElement('div'); cta.className = 'sda-bloco pv';
+    cta.innerHTML = '<a class="pv-cta" href="#oferta">Quero receber tudo isso agora</a><p class="sda-fn" style="margin-top:8px">Pagamento único · Acesso imediato · 30 dias de garantia</p>';
+    grupo.forEach(function (g) { sRes.parentNode.insertBefore(g, sRes); });
+    sRes.parentNode.insertBefore(cta, sRes);
+  }
 })();
