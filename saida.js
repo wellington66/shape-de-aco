@@ -38,6 +38,7 @@
   function irPara(of) {
     var o = OFERTAS[of], url = o.link + (location.search ? '?' + location.search.slice(1) : '');
     if (window.alCheckout) url = window.alCheckout(url, '28d');   // só avisa o painel de rastreio (sessão e utm)
+    try { localStorage.setItem('sda_tentou', String(Date.now())); } catch (e) {}
     location.href = url;
   }
 

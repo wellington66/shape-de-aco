@@ -93,7 +93,7 @@
       var plano = { pmotdrk: '7 dias', '38ynh82': '28 dias', qjk7tw4: '90 dias' }[o[0]];
       cl('set', 'plano', plano); cl('event', 'clicou_checkout');
       // GA manda por beacon; o callback (ou 800 ms) garante o envio antes de sair para a Cakto
-      var foi = false; function ir() { if (!foi) { foi = true; location.href = url; } }
+      var foi = false; function ir() { if (!foi) { foi = true; try { localStorage.setItem('sda_tentou', String(Date.now())); } catch (e) {} location.href = url; } }
       if (window.gtag && !LOCAL) {
         gtag('event', 'begin_checkout', { currency: 'BRL', value: o[1], items: [{ item_id: o[0], item_name: 'Desafio Treino de Aço - ' + plano, price: o[1] }], transport_type: 'beacon', event_callback: ir });
         setTimeout(ir, 800);
