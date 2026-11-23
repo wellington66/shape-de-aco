@@ -5,12 +5,12 @@
 (function () {
   'use strict';
   if ((document.body.getAttribute('data-replica-kind') || '') !== 'checkoutPersonalized') return;
-  var BASE = 'https://pay.wiapy.com/5jGsM3YvdZxi';         // plano de 28 dias (checkout principal, Wiapy)
+  // 28 dias na Wiapy: R$ 24,90 (UU2yy2QmmNq) e R$ 19,90 (VmVqS7wHYoC_) são ofertas do produto, cada uma com link próprio (a URL não aplica cupom)
   var OFERTAS = {
-    up:   { img: 'assets/saida/saida-up.webp', cupom: 'VOLTA17', btn: 'QUERO OS 28 DIAS POR R$ 24,90', nao: 'Não quero, continuar com o plano de 7 dias' },
-    s24:  { cupom: 'VOLTA17', de: 'R$ 29,90', por: 'R$ 24,90', t: 'Espere, não saia ainda!', p: 'A gente quer te ajudar a começar o seu desafio. Por isso liberamos um <b>desconto especial</b> só para você, agora.', btn: 'QUERO MEU DESCONTO ESPECIAL', nao: 'Não, obrigado' },
-    s19:  { cupom: 'ULTIMA33', de: 'R$ 24,90', por: 'R$ 19,90', t: 'Tá bom… você ganhou.', p: 'Pode ir. Sério. Só que, olha que coincidência, o preço caiu de novo: <b>R$ 19,90</b>. Mas fique à vontade, a gente não vai insistir. <i>(muito)</i>', btn: 'TÁ BOM, VOU LEVAR POR R$ 19,90', nao: 'Vou sair mesmo assim' },
-    s19b: { cupom: 'ULTIMA33', de: 'R$ 29,90', por: 'R$ 19,90', t: 'Por favor, não vá embora!', p: 'A gente está implorando: é o <b>menor preço</b> que conseguimos fazer, menos que um lanche. E ainda tem <b>30 dias de garantia</b>: se não gostar, devolvemos tudo.', btn: 'TÁ BEM, EU FICO POR R$ 19,90', nao: 'Não, deixa eu ir' }
+    up:   { img: 'assets/saida/saida-up.webp', link: 'https://pay.wiapy.com/UU2yy2QmmNq', btn: 'QUERO OS 28 DIAS POR R$ 24,90', nao: 'Não quero, continuar com o plano de 7 dias' },
+    s24:  { link: 'https://pay.wiapy.com/UU2yy2QmmNq', de: 'R$ 29,90', por: 'R$ 24,90', t: 'Espere, não saia ainda!', p: 'A gente quer te ajudar a começar o seu desafio. Por isso liberamos um <b>desconto especial</b> só para você, agora.', btn: 'QUERO MEU DESCONTO ESPECIAL', nao: 'Não, obrigado' },
+    s19:  { link: 'https://pay.wiapy.com/VmVqS7wHYoC_', de: 'R$ 24,90', por: 'R$ 19,90', t: 'Tá bom… você ganhou.', p: 'Pode ir. Sério. Só que, olha que coincidência, o preço caiu de novo: <b>R$ 19,90</b>. Mas fique à vontade, a gente não vai insistir. <i>(muito)</i>', btn: 'TÁ BOM, VOU LEVAR POR R$ 19,90', nao: 'Vou sair mesmo assim' },
+    s19b: { link: 'https://pay.wiapy.com/VmVqS7wHYoC_', de: 'R$ 29,90', por: 'R$ 19,90', t: 'Por favor, não vá embora!', p: 'A gente está implorando: é o <b>menor preço</b> que conseguimos fazer, menos que um lanche. E ainda tem <b>30 dias de garantia</b>: se não gostar, devolvemos tudo.', btn: 'TÁ BEM, EU FICO POR R$ 19,90', nao: 'Não, deixa eu ir' }
   };
   function ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) {} return null; }
   var aberto = false, ultimoFechar = 0;
@@ -36,9 +36,7 @@
   document.head.appendChild(css);
 
   function irPara(of) {
-    // Wiapy não aplica cupom pela URL: copia o código e o checkout pede para digitar no campo "Cupom de desconto"
-    var o = OFERTAS[of], url = BASE + (location.search ? '?' + location.search.slice(1) : '');
-    try { navigator.clipboard.writeText(o.cupom); } catch (e) {}
+    var o = OFERTAS[of], url = o.link + (location.search ? '?' + location.search.slice(1) : '');
     if (window.alCheckout) url = window.alCheckout(url, '28d');   // só avisa o painel de rastreio (sessão e utm)
     location.href = url;
   }
@@ -50,7 +48,6 @@
     var topo = o.img ? '<img src="' + o.img + '" alt="Oferta do Desafio Treino de Aço">' :
       '<div class="tx"><small>TREINO DE AÇO · 28 DIAS</small><h2>' + o.t + '</h2><p>' + o.p + '</p><div class="pr"><s>' + o.de + '</s><strong>' + o.por + '</strong></div></div>';
     d.innerHTML = '<div class="bx"><button class="x" aria-label="Fechar">×</button>' + topo +
-      '<p style="margin:12px 16px 0;font:14px/1.4 Arial,Helvetica,sans-serif;color:#C9CED5">Seu cupom: <b style="color:#FF5B1F;letter-spacing:.06em">' + o.cupom + '</b><br>Cole no campo <b>Cupom de desconto</b> do checkout e toque em Aplicar.</p>' +
       '<button class="go">' + o.btn + '</button><button class="no">' + o.nao + '</button></div>';
     document.body.appendChild(d);
     function fechar(cont) { if (d.parentNode) d.parentNode.removeChild(d); aberto = false; ultimoFechar = Date.now(); if (cont && aoFechar) aoFechar(); }
