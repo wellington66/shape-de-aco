@@ -34,3 +34,7 @@ button:focus-visible,a:focus-visible { outline:3px solid #FF5B1F; outline-offset
 [data-age-index] { min-width:0; overflow:hidden; }
 [data-age-index] [data-test="firstPageCard__image"] { width:100% !important; height:100% !important; object-fit:cover; object-position:center top; }
 .stage-one-pick { color:#E8EBEF; font-weight:700; font-size:16px; margin-top:-14px; }
+.stage-one-description { text-wrap:balance; }
+.stage-one-ben { display:flex; justify-content:center; flex-wrap:wrap; gap:6px; margin:10px 16px 6px; }
+.stage-one-ben span { background:rgba(255,91,31,.12); border:1px solid rgba(255,91,31,.45); color:#E8EBEF; border-radius:999px; padding:5px 11px; font-size:12px; font-weight:600; }
+.stage-one-time { text-align:center; margin:6px 0 12px; font-size:14px; font-weight:700; color:#FF5B1F; }
