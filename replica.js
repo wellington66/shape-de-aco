@@ -103,6 +103,7 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36, 6, 13, 14, 15, 21, 23, 24, 25,
     if (!pct) pct = $$('[data-test="loader__progressCircle"] span').filter(function (el) { return /^\d+$/.test(el.textContent.trim()); })[0];   // número e % em spans separados
     var p = 0, iv = setInterval(function () {
       p = Math.min(100, p + 1); if (pct) pct.textContent = pct.textContent.replace(/\d+/, p);
+      var bf = document.getElementById('sda-bar-fill'), bp = document.getElementById('sda-bar-pct'); if (bf) bf.style.width = p + '%'; if (bp) bp.textContent = p + '%';
       if (p >= 100) { clearInterval(iv); setTimeout(next, 400); }
     }, kind === 'loader_11576' ? 120 : 45);   // com as provas passando, o carregamento dura ~12 s
   }
