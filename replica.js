@@ -100,6 +100,7 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36, 6, 13, 14, 15, 21, 23, 24, 25,
   // loader: anima % e avança
   if (/^loader/.test(kind)) {
     var pct = $$('[data-test="loader__progressCircle"] *').filter(function (el) { return /\d+\s*%/.test(el.textContent) && el.children.length === 0; })[0];
+    if (!pct) pct = $$('[data-test="loader__progressCircle"] span').filter(function (el) { return /^\d+$/.test(el.textContent.trim()); })[0];   // número e % em spans separados
     var p = 0, iv = setInterval(function () {
       p = Math.min(100, p + 1); if (pct) pct.textContent = pct.textContent.replace(/\d+/, p);
       if (p >= 100) { clearInterval(iv); setTimeout(next, 400); }
