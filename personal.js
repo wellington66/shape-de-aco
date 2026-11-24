@@ -45,7 +45,7 @@
   if (!LOCAL) {
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1566100141500586'); fbq('track', 'PageView');
-    if (kind === 'checkoutPersonalized') fbq('track', 'ViewContent', { content_name: 'Desafio Treino de Aço - checkout', currency: 'BRL', value: 47.00 });
+    if (kind === 'checkoutPersonalized') fbq('track', 'ViewContent', { content_name: 'Desafio Treino de Aço - checkout', currency: 'BRL', value: 29.90 });
   }
   document.addEventListener('click', function (e) {
     if (/email/.test(kind) && e.target.closest('[data-test*="goNext"]')) { fb('track', 'Lead'); ga('event', 'generate_lead', { currency: 'BRL', value: 0 }); cl('event', 'lead'); }
@@ -70,14 +70,14 @@
     cl('set', 'etapa', etapa);
     ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content'].forEach(function (k) { if (qs.get(k)) cl('set', k, qs.get(k)); });
     if (kind === 'checkoutPersonalized') {
-      ga('event', 'view_item', { currency: 'BRL', value: 47.00, items: [{ item_id: '38ynh82', item_name: 'Desafio Treino de Aço - 28 dias', price: 47.00 }] });
+      ga('event', 'view_item', { currency: 'BRL', value: 29.90, items: [{ item_id: '38ynh82', item_name: 'Desafio Treino de Aço - 28 dias', price: 29.90 }] });
       cl('event', 'viu_checkout');
     }
   }
 
   // ---- checkout: botões levam à oferta da Cakto do plano escolhido ----
   if (kind === 'checkoutPersonalized') {
-    var OF = { 'PlanItem-Teste-de-1-semana': ['pmotdrk', 27.00], 'PlanItem-Plano-de-4-Semanas': ['38ynh82', 47.00], 'PlanItem-Plano-de-12-Semanas': ['qjk7tw4', 67.00] };
+    var OF = { 'PlanItem-Teste-de-1-semana': ['pmotdrk', 19.90], 'PlanItem-Plano-de-4-Semanas': ['38ynh82', 29.90], 'PlanItem-Plano-de-12-Semanas': ['qjk7tw4', 49.90] };
     document.addEventListener('click', function (e) {
       var b = e.target.closest('[data-test="header__ctaButton"], [data-test="checkout__mainButton"], [data-test="checkout__bottomButton"]');
       if (!b) return;

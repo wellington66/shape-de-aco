@@ -8,9 +8,9 @@
   // 28 dias na Wiapy: R$ 24,90 (UU2yy2QmmNq) e R$ 19,90 (VmVqS7wHYoC_) são ofertas do produto, cada uma com link próprio (a URL não aplica cupom)
   var OFERTAS = {
     up:   { img: 'assets/saida/saida-up.webp', link: 'https://pay.wiapy.com/UU2yy2QmmNq', btn: 'QUERO OS 28 DIAS POR R$ 24,90', nao: 'Não quero, continuar com o plano de 7 dias' },
-    s24:  { link: 'https://pay.wiapy.com/UU2yy2QmmNq', de: 'R$ 47,00', por: 'R$ 24,90', t: 'Espere, não saia ainda!', p: 'A gente quer te ajudar a começar o seu desafio. Por isso liberamos um <b>desconto especial</b> só para você, agora.', btn: 'QUERO MEU DESCONTO ESPECIAL', nao: 'Não, obrigado' },
+    s24:  { link: 'https://pay.wiapy.com/UU2yy2QmmNq', de: 'R$ 29,90', por: 'R$ 24,90', t: 'Espere, não saia ainda!', p: 'A gente quer te ajudar a começar o seu desafio. Por isso liberamos um <b>desconto especial</b> só para você, agora.', btn: 'QUERO MEU DESCONTO ESPECIAL', nao: 'Não, obrigado' },
     s19:  { link: 'https://pay.wiapy.com/VmVqS7wHYoC_', de: 'R$ 24,90', por: 'R$ 19,90', t: 'Tá bom… você ganhou.', p: 'Pode ir. Sério. Só que, olha que coincidência, o preço caiu de novo: <b>R$ 19,90</b>. Mas fique à vontade, a gente não vai insistir. <i>(muito)</i>', btn: 'TÁ BOM, VOU LEVAR POR R$ 19,90', nao: 'Vou sair mesmo assim' },
-    s19b: { link: 'https://pay.wiapy.com/VmVqS7wHYoC_', de: 'R$ 47,00', por: 'R$ 19,90', t: 'Por favor, não vá embora!', p: 'A gente está implorando: é o <b>menor preço</b> que conseguimos fazer, menos que um lanche. E ainda tem <b>30 dias de garantia</b>: se não gostar, devolvemos tudo.', btn: 'TÁ BEM, EU FICO POR R$ 19,90', nao: 'Não, deixa eu ir' }
+    s19b: { link: 'https://pay.wiapy.com/VmVqS7wHYoC_', de: 'R$ 29,90', por: 'R$ 19,90', t: 'Por favor, não vá embora!', p: 'A gente está implorando: é o <b>menor preço</b> que conseguimos fazer, menos que um lanche. E ainda tem <b>30 dias de garantia</b>: se não gostar, devolvemos tudo.', btn: 'TÁ BEM, EU FICO POR R$ 19,90', nao: 'Não, deixa eu ir' }
   };
   function ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) {} return null; }
   var aberto = false, ultimoFechar = 0;
