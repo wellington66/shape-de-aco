@@ -4,7 +4,7 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36, 6, 13, 14, 15, 21, 23, 24, 25,
   var step = parseInt(document.body.getAttribute('data-replica-step'), 10);
   var kind = document.body.getAttribute('data-replica-kind') || '';
   var TOTAL = window.REPLICA_TOTAL || 999;
-  function file(i) { return i === 0 ? 'idade.html' : 'p' + String(i).padStart(2, '0') + '.html'; }
+  function file(i) { return i === 0 ? 'index.html' : 'p' + String(i).padStart(2, '0') + '.html'; }
   var SKIP = window.REPLICA_SKIP || [];
   function next() { var n = step + 1; while (SKIP.indexOf(n) >= 0) n++; if (n < TOTAL) location.href = file(n) + location.search; }
 
