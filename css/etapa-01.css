@@ -33,3 +33,4 @@ button:focus-visible,a:focus-visible { outline:3px solid #FF5B1F; outline-offset
 [data-age-index] [class*="cardFooter"] { padding:12px 8px 12px 12px !important; border-radius:12px; }
 [data-age-index] { min-width:0; overflow:hidden; }
 [data-age-index] [data-test="firstPageCard__image"] { width:100% !important; height:100% !important; object-fit:cover; object-position:center top; }
+.stage-one-pick { color:#E8EBEF; font-weight:700; font-size:16px; margin-top:-14px; }
