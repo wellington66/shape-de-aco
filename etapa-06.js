@@ -2,10 +2,9 @@
 (function () {
   'use strict';
   var titles = [
-    'Ganhar massa muscular rapidamente!',
-    'Perder peso rapidamente!',
-    'Perder gordura e ganhar músculos rapidamente!',
-    'Ter mais força e condicionamento físico rapidamente!'
+    'Perder peso e secar a barriga!',
+    'Ganhar força e músculos!',
+    'Mais saúde e disposição!'
   ];
   var answers;
   try { answers = JSON.parse(localStorage.getItem('sda') || '{}'); }

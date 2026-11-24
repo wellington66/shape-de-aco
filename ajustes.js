@@ -53,43 +53,44 @@
     try { A = JSON.parse(localStorage.getItem('sda') || '{}'); } catch (e) {}
     var goal = A.singleSelect_21632;
     var G = [
-      { verbo: 'ganhar massa muscular', curto: 'ganhar músculo', obj: 'ganhar músculo e definir o corpo' },
-      { verbo: 'perder peso', curto: 'perder peso', obj: 'perder peso e definir o corpo' },
-      { verbo: 'perder gordura e ganhar músculo', curto: 'perder gordura e ganhar músculo', obj: 'perder gordura e ganhar músculo' },
-      { verbo: 'ganhar força e condicionamento', curto: 'ganhar força', obj: 'ganhar força e condicionamento' }
+      { verbo: 'perder peso e secar a barriga', curto: 'perder peso', obj: 'perder peso e secar a barriga' },
+      { verbo: 'ganhar força e músculos', curto: 'ganhar força', obj: 'ganhar força e músculos' },
+      { verbo: 'ter mais saúde e disposição', curto: 'ter mais saúde', obj: 'ter mais saúde e disposição' }
     ][goal];
 
     // p47 / p48 / p52: o objetivo da p04 em vez de "ganhar músculo" para todo mundo
     if (G && /^multiSelect_21672/.test(kind)) txt(function (v) { return v.replace('ganhar massa muscular', G.verbo); });
     if (G && /^singleSelect_21673/.test(kind)) txt(function (v) { return v.replace('ganhar músculo', G.curto); });
-    if (G && /progress-graph/.test(kind)) txt(function (v) { return v.replace('para ganhar massa muscular está pronto', 'para ' + G.verbo + ' está pronto').replace('Objetivo: ganhar músculo e definir o corpo', 'Objetivo: ' + G.obj); });
+    if (G && /progress-graph/.test(kind)) txt(function (v) { return v.replace('Objetivo: ganhar músculo e definir o corpo', 'Objetivo: ' + G.obj); });
 
-    // p11: "força e comida suficiente para o músculo aparecer" é texto de quem é magro (ectomorfo)
-    if (/^infoPage_8289/.test(kind) && (A.singleSelect_21642 === 1 || A.singleSelect_21642 === 2)) {
-      var endo = A.singleSelect_21642 === 2;
-      $$('b').forEach(function (b) {
-        if (b.textContent.trim() !== 'força e comida suficiente') return;
-        b.textContent = endo ? 'treino do corpo inteiro e comida de verdade' : 'força e comida de verdade';
-        var nx = b.nextSibling;
-        if (nx && nx.nodeType === 3) nx.nodeValue = nx.nodeValue.replace('para o músculo aparecer', endo ? 'para acelerar a queima de gordura' : 'para você definir o corpo');
-      });
+    // p11: nome e texto do tipo físico (copy Lastafit), pela resposta da p10 (0 ecto, 1 meso, 2 endo)
+    if (/^infoPage_8289/.test(kind)) {
+      var bi = A.singleSelect_21642 || 0;
+      var bn = $('#sda-bio-nome'), bt = $('#sda-bio-txt');
+      if (bn) bn.textContent = ['Ectomorfo', 'Mesomorfo', 'Endomorfo'][bi] || 'Ectomorfo';
+      if (bt) bt.textContent = [
+        'Pro seu corpo é mais difícil ganhar massa e ver mudança no espelho. Mas com a rotina certa isso muda.',
+        'Seu corpo ganha peso fácil e solta devagar. Mas a mudança está ao seu alcance.',
+        'Você engorda fácil e demora mais pra emagrecer. Mas isso tem jeito.'][bi] || bt.textContent;
     }
 
-    // p18: regiões que a pessoa marcou na p17
+    // p18: foco = regiões marcadas na p17
     if (/^infoPage_8317/.test(kind) && A.regioes && A.regioes.length) {
-      var nomes = { 'Barriga': 'barriga', 'Peitoral': 'peito', 'Braços': 'braços', 'Pernas': 'pernas', 'Costas': 'costas' };
-      var lista = A.regioes.filter(function (r) { return nomes[r]; }).map(function (r) { return nomes[r]; });
-      var t = $('[data-test="infoPage__title"]');
-      if (t && A.regioes.indexOf('Corpo Inteiro') >= 0) t.textContent = 'Corpo inteiro trabalhado na sua sala';
-      else if (t && lista.length) { var tx = lista.length > 1 ? lista.slice(0, -1).join(', ') + ' e ' + lista[lista.length - 1] : lista[0];
-        t.textContent = tx.charAt(0).toUpperCase() + tx.slice(1) + (lista.length > 1 ? ' trabalhados' : ' trabalhada') + ' na sua sala'; }
+      var nomes = { 'Barriga grande': 'barriga', 'Peitoral caído': 'peitoral', 'Braços finos': 'braços', 'Pernas finas': 'pernas' };
+      var lista = A.regioes.map(function (r) { return nomes[r]; }).filter(Boolean);
+      var fo = $('#sda-foco');
+      if (fo && lista.length) fo.textContent = lista.length > 1 ? lista.slice(0, -1).join(', ') + ' e ' + lista[lista.length - 1] : lista[0];
     }
+
+    // p22: intensidade escolhida na p20
+    if (/^infoPage_8297/.test(kind)) { var pf = ['Bem leve', 'Intermediário', 'Mais ativo', 'Ideal para você'][A.singleSelect_21653];
+      var pe = $('#sda-pref'); if (pf && pe) pe.textContent = pf; }
 
     // p41: a pergunta de estilo de vida foi cortada, então não mostramos uma resposta inventada
     if (/^infoPage_8309/.test(kind)) $$('p').forEach(function (p) { if (p.textContent.trim() === 'Estilo de vida') { var li = p.closest('li'); if (li) li.style.display = 'none'; } });
 
     // p49: o tempo por treino que a pessoa escolheu na p20 (dentro da faixa de 10 a 25 min do app)
-    if (/^loader_11576/.test(kind)) { var m = ['15 minutos', '20 minutos', '25 minutos', '25 minutos', '20 minutos'][A.singleSelect_21653];
+    if (/^loader_11576/.test(kind)) { var m = '15 minutos';
       var lt = $('[data-test="loader__title"]'); if (m && lt) lt.textContent = m + ' por dia'; }
   });
 })();
