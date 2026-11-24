@@ -123,7 +123,7 @@
 
   // ---- aplicar ----
   if (kind === 'infoPage_8319' && A.idade != null) {
-    var faixa = ['casa dos 20 anos', 'casa dos 30 anos', 'casa dos 40 anos', 'casa dos 50 anos ou mais'][A.idade];
+    var faixa = ['casa dos 30 anos', 'casa dos 40 anos', 'casa dos 50 anos', 'casa dos 60 anos ou mais'][A.idade];
     txt(function (v) { return v.replace('casa dos 20 anos', faixa); });
   }
   if (kind === 'infoPage_8289') {
