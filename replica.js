@@ -103,7 +103,7 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36, 6, 13, 14, 15, 21, 23, 24, 25,
     var p = 0, iv = setInterval(function () {
       p = Math.min(100, p + 1); if (pct) pct.textContent = pct.textContent.replace(/\d+/, p);
       if (p >= 100) { clearInterval(iv); setTimeout(next, 400); }
-    }, 45);
+    }, document.getElementById('sda-provas') ? 120 : 45);   // com as provas passando, o carregamento dura ~12 s
   }
 
   // raspadinha: o dedo/mouse apaga a camada (máscara SVG), depois revela tudo e avança
