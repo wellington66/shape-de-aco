@@ -73,4 +73,13 @@
     grupo.forEach(function (g) { sRes.parentNode.insertBefore(g, sRes); });
     sRes.parentNode.insertBefore(cta, sRes);
   }
+
+  // ---- logo depois das provas, a oferta; "Para quem é" vai para depois dos planos ----
+  var plano = document.querySelector('[data-test="checkoutPlanSelectWithBonusInsidePlanSection__base"]');
+  var sPara2 = seps.filter(function (e) { return /PARA QUEM/.test(tx(e)); })[0];
+  if (plano && sPara2) {
+    var cont = plano; while (cont && cont.parentNode !== sPara2.parentNode) cont = cont.parentNode;
+    var obj = sPara2.nextElementSibling;
+    if (cont && obj) { cont.parentNode.insertBefore(obj, cont.nextSibling); cont.parentNode.insertBefore(sPara2, obj); }
+  }
 })();
