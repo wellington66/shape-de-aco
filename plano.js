@@ -46,22 +46,14 @@
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var box = document.createElement('div'); box.className = 'sda-hero';
   box.innerHTML =
-    // A — atenção
     '<div class="sda-sel">✓ ANÁLISE CONCLUÍDA</div>' +
     '<h2 class="sda-t">' + (nome ? nome + ', seu' : 'Seu') + ' plano <em>personalizado</em> está pronto</h2>' +
-    '<p class="sda-s">Foi por isso que você respondeu as perguntas: <b>cada corpo é diferente</b>, e um treino igual para todo mundo não funciona. Veja o que analisamos:</p>' +
-    '<ul class="sda-ck">' + passos.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>' +
-    // I — interesse
+    '<div class="sda-ba"><figure><img src="assets/sda/sda-antes-b901f6.webp" alt="Antes" fetchpriority="high"><figcaption>HOJE</figcaption></figure><div class="seta">›</div>' +
+    '<figure class="dep"><img src="assets/sda/sda-depois-1db9e5.webp" alt="Depois" fetchpriority="high"><figcaption>EM 28 DIAS</figcaption></figure></div>' +
+    '<p class="sda-nt">Imagem ilustrativa. Resultados variam de pessoa para pessoa.</p>' +
     '<div class="sda-card"><h4>O que suas respostas <em>revelaram</em></h4><div class="sda-grid">' +
     lido.map(function (i) { return '<div><small>' + i[0] + '</small><b>' + esc(i[1]) + '</b></div>'; }).join('') +
-    '</div><p>' + motivo + '</p></div>' +
-    // D — desejo
-    '<h3 class="sda-t" style="font-size:19px">Onde esse plano leva você em <em>28 dias</em></h3>' +
-    '<div class="sda-ba"><figure><img src="assets/sda/sda-antes-b901f6.webp" alt="Antes"><figcaption>HOJE</figcaption></figure><div class="seta">›</div>' +
-    '<figure class="dep"><img src="assets/sda/sda-depois-1db9e5.webp" alt="Depois"><figcaption>EM 28 DIAS</figcaption></figure></div>' +
-    '<p class="sda-nt">Imagem ilustrativa. Resultados variam de pessoa para pessoa.</p>' +
-    '<ul class="sda-inc"><li>Treinos em vídeo, em casa e sem equipamento</li><li>Ritmo ajustado ao seu nível: ' + nivel + '</li><li>De 10 a 25 minutos por dia, do dia 1 ao 28</li><li>Garantia de 30 dias: se não gostar, devolvemos o valor</li></ul>' +
-    // A — ação
+    '</div></div>' +
     '<a class="sda-cta" href="#oferta">Quero meu plano personalizado</a><p class="sda-fn">Pagamento único · Acesso imediato · 30 dias de garantia</p>';
   Array.prototype.slice.call(hero.children).forEach(function (c) { c.style.display = 'none'; });
   hero.insertBefore(box, hero.firstChild);
