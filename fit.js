@@ -17,6 +17,7 @@
     '.sda-fit2 [class*="option-tile_optionTile"]{min-height:40px!important;padding-top:6px!important;padding-bottom:6px!important}' +
     '.sda-fit2 [data-test$="__title"]{font-size:21px!important;line-height:1.2!important}' +
     '.sda-fit2 [class*="question-layout_description"],.sda-fit2 [data-test="infoPage__textContainer"]{font-size:14px!important;line-height:1.4!important}' +
+    '.sda-fit2 .sda-bul{font-size:13px!important;line-height:1.35!important;margin-top:6px!important}' +
     '.sda-fit3 [data-fit-opt]{display:none!important}' +
     '.sda-fit3 ul.sda-many{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}.sda-fit3 ul.sda-many>li{min-width:0}' +
     '.sda-fit3 ul.sda-many [class*="option-tile_optionTile"]{height:100%!important}.sda-fit3 ul.sda-many img{display:none!important}' +
