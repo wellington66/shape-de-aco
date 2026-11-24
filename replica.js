@@ -6,7 +6,14 @@ window.REPLICA_TOTAL=55; window.REPLICA_SKIP=[36, 6, 13, 14, 15, 21, 23, 24, 25,
   var TOTAL = window.REPLICA_TOTAL || 999;
   function file(i) { return i === 0 ? 'index.html' : 'p' + String(i).padStart(2, '0') + '.html'; }
   var SKIP = window.REPLICA_SKIP || [];
-  function next() { var n = step + 1; while (SKIP.indexOf(n) >= 0) n++; if (n < TOTAL) location.href = file(n) + location.search; }
+  // ordem do funil (copy Lastafit): idade, bem-vindo, conhece, ponte, objetivo, corpo, incômodo, desejado, áreas, foco, 15 min, frequência,
+  // agachamento, flexões, flexível, dia típico, peso muda, biótipo, orgulho, dores, ponte dor, intensidade, ponte semanas, altura, peso, meta,
+  // água, sono, alimentação, energia, loader, previsão, perfil, libido/testosterona, confiança, e-mail, nome, gráfico, raspadinha, oferta
+  var ORDER = window.REPLICA_ORDER = [0, 1, 2, 3, 4, 7, 45, 8, 17, 18, 16, 19, 13, 12, 14, 24, 10, 11, 9, 47, 46, 20, 22, 37, 38, 39, 27, 28, 31, 25, 49, 44, 41, 26, 48, 50, 51, 52, 53, 54];
+  function next() { var k = ORDER.indexOf(step), n;
+    if (k >= 0 && k < ORDER.length - 1) n = ORDER[k + 1];
+    else { n = step + 1; while (SKIP.indexOf(n) >= 0) n++; }
+    if (n < TOTAL) location.href = file(n) + location.search; }
 
   // mobile-first: em tela larga vira uma coluna de celular de 430px
   function desk() {

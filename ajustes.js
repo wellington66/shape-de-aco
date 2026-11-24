@@ -86,6 +86,10 @@
     if (/^infoPage_8297/.test(kind)) { var pf = ['Bem leve', 'Intermediário', 'Mais ativo', 'Ideal para você'][A.singleSelect_21653];
       var pe = $('#sda-pref'); if (pf && pe) pe.textContent = pf; }
 
+    // p41: nível de energia vem da p25
+    if (/^infoPage_8309/.test(kind)) { var en = ['Quase Nulo', 'Instável', 'Enérgico'][A.singleSelect_21661];
+      if (en) $$('p').forEach(function (p) { if (p.textContent.trim() === 'Baixo') p.textContent = en; }); }
+
     // p41: a pergunta de estilo de vida foi cortada, então não mostramos uma resposta inventada
     if (/^infoPage_8309/.test(kind)) $$('p').forEach(function (p) { if (p.textContent.trim() === 'Estilo de vida') { var li = p.closest('li'); if (li) li.style.display = 'none'; } });
 
