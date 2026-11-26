@@ -31,6 +31,7 @@
   if (A.intensidade) lido.push(['Intensidade', A.intensidade]);
   if (A.areas && A.areas.length && A.areas[0] !== 'Nenhuma das anteriores') lido.push(['Foco', A.areas.slice(0, 2).join(', ')]);
   if (A.objetivo) lido.push(['Objetivo', A.objetivo]);
+  if (A.libido) lido.push(['Vigor', 'Libido e disposição de volta']);
   if (lido.length % 2) lido[lido.length - 1].push('full');
   var motivo = bio === 'Endomorfo' ? 'Seu corpo acumula gordura com facilidade, então o plano combina queima de gordura com força.' :
     bio === 'Ectomorfo' ? 'Seu corpo tem dificuldade de ganhar massa, então o plano foca em força e músculo.' :

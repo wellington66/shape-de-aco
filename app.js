@@ -217,6 +217,11 @@
     return { cons: cons, str: str, end: end, total: total, level: level, badge: badge };
   }
 
+  function querLibido() {
+    var A = state.answers, has = function (k, v) { return (A[k] || []).indexOf(v) >= 0; };
+    return has('objetivosExtras', 'Aumentar vigor e libido') || has('eventosPassados', 'Queda de disposição e libido') || has('motivacoes', 'Recuperar vigor e libido');
+  }
+
   function getAvatarByBuild() {
     var b = state.answers.porteFisico;
     if (b === 'Magro') return 'assets/img/body_1.webp';
@@ -1300,7 +1305,7 @@
     var metab = soma === 'Ectomorfo' ? 'Acelerado' : soma === 'Endomorfo' ? 'Lento, tende a acumular gordura' : 'Moderado, responde rápido ao treino';
     var riskText = cat.healthy
       ? 'Seu IMC está na faixa saudável! Manter massa muscular ativa e baixa gordura visceral protege sua energia e saúde a longo prazo.'
-      : 'Pressão alta, maior risco cardiovascular, resistência à insulina, fadiga constante e sobrecarga nas costas e articulações.';
+      : 'Pressão alta, maior risco cardiovascular, resistência à insulina, fadiga constante, queda de testosterona e de libido e sobrecarga nas costas e articulações.';
 
     wrap.innerHTML =
       '<h2 class="bm-title center">' + esc(step.title) + '</h2>' +
@@ -1654,6 +1659,7 @@
       '<div class="checklist-summary">' +
         '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Calibrado para nível ' + sc.level + ' (' + esc(state.answers.duracaoTreino || '15-20 min') + '/dia)</span></div>' +
         '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>100% personalizado com base nas suas respostas</span></div>' +
+        (querLibido() ? '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Foco extra em vigor, libido e disposição</span></div>' : '') +
         '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Meta: ' + goalVerb + ' ' + diffKg.toFixed(0) + ' kg até ' + fmtDateFull(goalDate) + '*</span></div>' +
       '</div>' +
       '<p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin-top:10px;">*Gráfico e prazo ilustrativos. Resultados variam conforme dedicação e alimentação.</p>';
@@ -1769,7 +1775,7 @@
         var Q = state.answers, fs = computeFitnessScore();
         sda.porte = Q.porteFisico || ''; sda.fisico = Q.fisicoIdeal || ''; sda.objetivo = Q.objetivo || '';
         sda.nivel = fs.level; sda.intensidade = Q.intensidade || ''; sda.duracao = Q.duracaoTreino || '';
-        sda.freq = Q.frequenciaSemanal || ''; sda.areas = Q.areasProblema || []; sda.metaData = getEstimatedGoalDate().getTime();
+        sda.freq = Q.frequenciaSemanal || ''; sda.areas = Q.areasProblema || []; sda.metaData = getEstimatedGoalDate().getTime(); sda.libido = querLibido() ? 1 : 0;
         localStorage.setItem('sda', JSON.stringify(sda));
       } catch (e) {}
 
