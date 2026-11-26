@@ -252,6 +252,24 @@
     });
   }
 
+  /* ==================== PAINEL DE RASTREIO: 1 etapa por tela do quiz ====================
+     Envia só o número e o título da tela (q00, q01...). Nunca envia respostas nem dados da pessoa. */
+  var NOMES_TELA = {
+    entry_loader: 'Abertura (carregando)', age_bracket: 'Escolha da idade', social_proof_age: 'Prova social por idade',
+    info_solution: 'A solução (app)', info_somatotype: 'Resultado: biotipo', info_fitness_score: 'Resultado: nível físico',
+    ex_lateral_lunge: 'Gosta do exercício: avanço lateral', ex_close_plank: 'Gosta do exercício: prancha', ex_tactical_twist: 'Gosta do exercício: torção',
+    confidence: 'Confiança no resultado', email_capture: 'Pedido de e-mail', plan_ready_graph: 'Plano pronto (gráfico)',
+    start_today_splash: 'Comece hoje', scratch_card: 'Raspadinha (fim do quiz)'
+  };
+  function painelTela(i) {
+    var st = STEPS[i];
+    if (!st) return;
+    var nome = NOMES_TELA[st.id] || String(st.title || st.id).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    var id = 'q' + (i < 10 ? '0' : '') + i, rotulo = ((i + 1) + '. ' + nome).slice(0, 70);
+    // o al.js carrega depois: enquanto isso a etapa fica na fila e ele envia quando chegar
+    if (window.alPasso) window.alPasso(id, rotulo); else (window.alFila = window.alFila || []).push([id, rotulo]);
+  }
+
   /* ==================== OVERLAYS (MENU / HELP / TOOLTIP) ==================== */
   function openInfoModal(title, body, btnText) {
     elInfoTitle.textContent = title;
@@ -473,6 +491,7 @@
   /* ==================== RENDERERS BY STEP TYPE ==================== */
   function renderCurrentStep() {
     var step = STEPS[state.idx];
+    painelTela(state.idx);
     updateHeader(step);
     setStickyCta(null);
 
