@@ -63,3 +63,14 @@ html{scroll-behavior:smooth}
 .pv-hint{margin-top:10px}
 .pv-fold{max-height:none;overflow:visible}
 .pv-fold:after{display:none}
+/* carrossel de provas (prints) */
+.pv-car2{margin:4px 0 0;position:relative;max-width:100%;overflow:hidden}
+.pvc-track{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.pvc-track::-webkit-scrollbar{display:none}
+.pvc-s{flex:0 0 auto;margin:0;scroll-snap-align:center;height:330px;border-radius:14px;overflow:hidden;background:#201E19;border:1px solid #2E2B24}
+.pvc-s img{height:100%;width:auto;display:block;object-fit:contain}
+.pvc-dots{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.pvc-dots button{width:7px;height:7px;border-radius:50%;border:0;padding:0;background:#4a463c;cursor:pointer}
+.pvc-dots button.on{background:#A6A055;width:18px;border-radius:4px}
+.pv-car2{width:100%;min-width:0;box-sizing:border-box}
+.pvc-track{width:100%;min-width:0;max-width:100%;box-sizing:border-box}
