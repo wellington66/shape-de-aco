@@ -657,6 +657,29 @@ a {
   object-position: center 20%;
 }
 
+.quiz-q-photo {
+  margin-bottom: 14px;
+}
+
+.quiz-q-photo img {
+  aspect-ratio: 16 / 10;
+  max-height: 225px;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+@media (max-height: 760px) {
+  .quiz-q-photo img {
+    max-height: 175px;
+  }
+}
+
+@media (max-height: 670px) {
+  .quiz-q-photo img {
+    max-height: 145px;
+  }
+}
+
 .exercise-badge {
   position: absolute;
   top: 12px;

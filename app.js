@@ -707,8 +707,11 @@
   /* 12, 14, 15, 18, 19, 26, 27, 29, 30, 31, 48 — SINGLE LIST */
   function renderSingleList(wrap, step, withIcons) {
     var cur = shown(step.key);
-    var html = '<h2 class="bm-title">' + esc(step.title) + '</h2>';
-    if (step.sub) html += '<p class="bm-sub">' + esc(step.sub) + '</p>';
+    var html = '<h2 class="bm-title' + (step.image ? ' center' : '') + '">' + esc(step.title) + '</h2>';
+    if (step.sub) html += '<p class="bm-sub' + (step.image ? ' center' : '') + '">' + esc(step.sub) + '</p>';
+    if (step.image) {
+      html += '<div class="top-photo-card quiz-q-photo"><img src="' + step.image + '" alt="' + esc(step.title) + '"' + (step.imagePos ? ' style="object-position:' + esc(step.imagePos) + ';"' : '') + '></div>';
+    }
     html += '<div class="answer-stack">' + step.options.map(function (o) {
       var sel = cur === o.value;
       return '<button type="button" class="answer-card' + (sel ? ' is-selected' : '') + '" data-val="' + esc(o.value) + '">' +

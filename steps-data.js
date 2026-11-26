@@ -180,10 +180,12 @@ window.TREINO_DE_ACO_STEPS = [
   /* 12 — LAST TIME IN BEST SHAPE */
   {
     id: 'best_shape_ago',
-    type: 'singleList',
+    type: 'splitSingle',
     section: 1, sectionLabel: 'Meu Perfil', segPct: 94.4,
     key: 'melhorForma',
     title: 'Há quanto tempo você esteve na melhor forma da sua vida?',
+    image: 'assets/img/pose_standing.webp',
+    wideOptions: true,
     options: [
       { value: 'Menos de 1 ano', label: 'Há menos de 1 ano' },
       { value: '1 a 2 anos', label: 'Há 1 a 2 anos' },
@@ -209,6 +211,7 @@ window.TREINO_DE_ACO_STEPS = [
     section: 2, sectionLabel: 'Atividade', segPct: 6.25,
     key: 'flexibilidade',
     title: 'Quão flexível você se considera?',
+    image: 'assets/img/shoulder_stretch.webp',
     options: [
       { value: 'Muito flexível', label: 'Muito flexível' },
       { value: 'Razoavelmente flexível', label: 'Razoavelmente flexível' },
@@ -224,6 +227,8 @@ window.TREINO_DE_ACO_STEPS = [
     section: 2, sectionLabel: 'Atividade', segPct: 12.5,
     key: 'caminhada',
     title: 'Quanto você caminha por dia?',
+    image: 'assets/img/loader_runner.webp',
+    imagePos: 'center 15%',
     options: [
       { value: 'Menos de 30 min', label: 'Menos de 30 minutos' },
       { value: '30 a 60 min', label: '30 a 60 minutos' },
@@ -265,6 +270,8 @@ window.TREINO_DE_ACO_STEPS = [
     section: 2, sectionLabel: 'Atividade', segPct: 37.5,
     key: 'intensidade',
     title: 'O que melhor descreve o treino ideal para você?',
+    image: 'assets/img/forearm_plank.webp',
+    imagePos: 'center 68%',
     options: [
       { value: 'Leve', label: 'Leve e tranquilo', desc: 'Ritmo suave, esforço mínimo, quase sem suar' },
       { value: 'Moderado', label: 'Moderado', desc: 'Ativo, esforço médio, respiração levemente acelerada' },
@@ -279,6 +286,7 @@ window.TREINO_DE_ACO_STEPS = [
     section: 2, sectionLabel: 'Atividade', segPct: 43.75,
     key: 'flexoes',
     title: 'Quantas flexões você consegue fazer seguidas?',
+    image: 'assets/img/high_plank.webp',
     options: [
       { value: '0', label: 'Não consigo fazer flexões' },
       { value: '1-10', label: '1 a 10 flexões' },
@@ -379,10 +387,12 @@ window.TREINO_DE_ACO_STEPS = [
   /* 26 — WORKOUT DURATION */
   {
     id: 'workout_duration',
-    type: 'singleList',
+    type: 'splitSingle',
     section: 2, sectionLabel: 'Atividade', segPct: 87.5,
     key: 'duracaoTreino',
     title: 'Quanto tempo você quer que seus treinos durem?',
+    image: 'assets/img/squat_studio.webp',
+    wideOptions: true,
     options: [
       { value: '10-15 min', label: '10–15 min' },
       { value: '15-20 min', label: '15–20 min' },
@@ -399,6 +409,7 @@ window.TREINO_DE_ACO_STEPS = [
     section: 2, sectionLabel: 'Atividade', segPct: 93.75,
     key: 'frequenciaSemanal',
     title: 'Quantas vezes por semana você gostaria de treinar?',
+    image: 'assets/img/abs_twist.webp',
     options: [
       { value: '1-2 vezes', label: '1 a 2 vezes por semana' },
       { value: '3-4 vezes', label: '3 a 4 vezes por semana' },
@@ -420,10 +431,12 @@ window.TREINO_DE_ACO_STEPS = [
   /* 29 — WORK SCHEDULE */
   {
     id: 'work_schedule',
-    type: 'singleList',
+    type: 'splitSingle',
     section: 3, sectionLabel: 'Estilo de Vida', segPct: 8.33,
     key: 'rotinaTrabalho',
     title: 'Como é a sua rotina de trabalho?',
+    image: 'assets/img/pose_standing.webp',
+    wideOptions: true,
     options: [
       { value: 'Horário comercial', label: 'Horário comercial (9h às 18h)' },
       { value: 'Turnos noturnos', label: 'Turnos noturnos' },
@@ -435,10 +448,12 @@ window.TREINO_DE_ACO_STEPS = [
   /* 30 — TYPICAL DAY */
   {
     id: 'typical_day',
-    type: 'singleList',
+    type: 'splitSingle',
     section: 3, sectionLabel: 'Estilo de Vida', segPct: 16.67,
     key: 'diaTipico',
     title: 'Como você descreveria um dia comum seu?',
+    image: 'assets/img/high_knees.webp',
+    wideOptions: true,
     options: [
       { value: 'Sedentário', label: 'Passo a maior parte do tempo sentado' },
       { value: 'Em pé', label: 'Fico o tempo todo em pé' },
@@ -454,6 +469,8 @@ window.TREINO_DE_ACO_STEPS = [
     section: 3, sectionLabel: 'Estilo de Vida', segPct: 25,
     key: 'energiaDia',
     title: 'Como ficam seus níveis de energia durante o dia?',
+    image: 'assets/img/loader_runner.webp',
+    imagePos: 'center 15%',
     options: [
       { value: 'Baixa e inconsistente', label: 'Baixos e inconsistentes' },
       { value: 'Estáveis', label: 'Permanecem estáveis' },
@@ -753,6 +770,8 @@ window.TREINO_DE_ACO_STEPS = [
     type: 'confidenceSingle',
     section: 5, sectionLabel: 'Quase Lá', segPct: 84.2,
     key: 'confianca',
+    image: 'assets/img/pain_none.webp',
+    imagePos: 'center top',
     options: [
       { value: 'Acredito que consigo!', label: 'Eu acredito que consigo!' },
       { value: 'Incerto, mas disposto', label: 'Estou incerto, mas disposto a tentar!' },
