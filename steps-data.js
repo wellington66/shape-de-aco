@@ -119,11 +119,12 @@ window.TREINO_DE_ACO_STEPS = [
     section: 1, sectionLabel: 'Meu Perfil', segPct: 66.7,
     key: 'porteFisico',
     title: 'Como você descreveria seu porte físico?',
+    cutout: true,
     options: [
-      { value: 'Magro', label: 'Magro', img: 'assets/img/body_1.webp' },
-      { value: 'Porte médio', label: 'Porte médio', img: 'assets/img/body_2.webp' },
-      { value: 'Forte / encorpado', label: 'Encorpado', img: 'assets/img/body_3.webp' },
-      { value: 'Acima do peso', label: 'Acima do peso', img: 'assets/img/body_4.webp' }
+      { value: 'Magro', label: 'Magro', img: 'assets/img/body_1-sf2.webp' },
+      { value: 'Porte médio', label: 'Porte médio', img: 'assets/img/body_2-sf2.webp' },
+      { value: 'Forte / encorpado', label: 'Encorpado', img: 'assets/img/body_3-sf2.webp' },
+      { value: 'Acima do peso', label: 'Acima do peso', img: 'assets/img/body_4-sf2.webp' }
     ]
   },
 

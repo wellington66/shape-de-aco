@@ -656,7 +656,7 @@
     html += '<div class="photo-grid-2">' + step.options.map(function (o) {
       var sel = cur === o.value;
       return '<button type="button" class="photo-tile' + (sel ? ' is-selected' : '') + '" data-val="' + esc(o.value) + '">' +
-        '<div class="photo-tile-img"><img src="' + o.img + '" alt="' + esc(o.label) + '"></div>' +
+        '<div class="photo-tile-img' + (step.cutout ? ' is-cutout' : '') + '"><img src="' + o.img + '" alt="' + esc(o.label) + '"></div>' +
         '<div class="photo-tile-bar"><span>' + esc(o.label) + '</span><span class="radio-ring">' + (sel ? CHECK_SVG : '') + '</span></div>' +
       '</button>';
     }).join('') + '</div>';
@@ -1304,7 +1304,7 @@
     else if (bmi <= 25) pct = 25 + ((bmi - 18.5) / 6.5) * 25;
     else if (bmi <= 30) pct = 50 + ((bmi - 25) / 5) * 25;
     else pct = 75 + ((bmi - 30) / 10) * 25;
-    pct = Math.max(6, Math.min(94, pct));
+    pct = Math.max(4, Math.min(96, pct));
     var soma = state.answers.variacaoPeso || 'Mesomorfo';
     var metab = soma === 'Ectomorfo' ? 'Acelerado' : soma === 'Endomorfo' ? 'Lento, tende a acumular gordura' : 'Moderado, responde rápido ao treino';
     var riskText = cat.healthy
@@ -1315,9 +1315,9 @@
       '<h2 class="bm-title center">' + esc(step.title) + '</h2>' +
       '<div class="bmi-panel">' +
         '<div style="font-size:1.05rem;font-weight:700;margin-bottom:4px;">Índice de Massa Corporal (IMC)</div>' +
-        '<div class="bmi-callout-area"><div class="bmi-pill-float" style="left:clamp(50px, ' + pct + '%, calc(100% - 50px));">Você - ' + bmi.toFixed(2).replace('.', ',') + '</div><span class="bmi-pill-tick" style="left:' + pct + '%;"></span></div>' +
+        '<div class="bmi-callout-area"><div class="bmi-pill-float" style="left:clamp(60px, ' + pct + '%, calc(100% - 60px));">Você - ' + bmi.toFixed(2).replace('.', ',') + '</div><span class="bmi-pill-tick" style="left:clamp(8px, ' + pct + '%, calc(100% - 8px));"></span></div>' +
         '<div class="bmi-scale-nums"><span>15</span><span>18,5</span><span>25</span><span>30</span><span>40</span></div>' +
-        '<div class="bmi-rainbow-wrap"><div class="bmi-rainbow"></div><div class="bmi-dot" style="left:' + pct + '%;"></div></div>' +
+        '<div class="bmi-rainbow-wrap"><div class="bmi-rainbow"></div><div class="bmi-dot" style="left:clamp(8px, ' + pct + '%, calc(100% - 8px));"></div></div>' +
         '<div class="bmi-cats">' +
           '<span class="' + (cat.key === 'under' ? 'active' : '') + '">ABAIXO</span>' +
           '<span class="' + (cat.key === 'normal' ? 'active' : '') + '">NORMAL</span>' +
