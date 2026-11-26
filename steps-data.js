@@ -370,8 +370,8 @@ window.TREINO_DE_ACO_STEPS = [
     sub: 'Selecione todas as opções que se aplicam',
     cta: 'PRÓXIMO PASSO',
     options: [
-      { value: 'Costas sensíveis', label: 'Costas sensíveis', img: 'assets/img/pain_back.webp' },
-      { value: 'Joelhos sensíveis', label: 'Joelhos sensíveis', img: 'assets/img/pain_knee.webp' },
+      { value: 'Costas sensíveis', label: 'Costas sensíveis', img: 'assets/img/pain_back-v2.webp' },
+      { value: 'Joelhos sensíveis', label: 'Joelhos sensíveis', img: 'assets/img/pain_knee-v2.webp' },
       { value: 'Nenhuma das anteriores', label: 'Nenhuma delas', img: 'assets/img/pain_none.webp', exclusive: true }
     ]
   },
