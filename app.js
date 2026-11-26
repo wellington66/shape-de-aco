@@ -367,17 +367,41 @@
       }
       state.idx = nextIdx;
       renderCurrentStep();
+      preloadAhead(nextIdx);
       window.scrollTo({ top: 0, behavior: 'instant' });
       cl('set', 'etapa', 's' + nextIdx + '_' + STEPS[nextIdx].id);
     };
 
     if (currentView && !isBack && state.idx !== nextIdx) {
       currentView.classList.add('is-leaving');
-      addTimer(commit, 180);
+      addTimer(commit, 110);
     } else {
       commit();
     }
   }
+
+  /* pré-carrega e decodifica as imagens das próximas telas (troca sem travar) */
+  var preImg = {};
+  function preloadSrc(src) {
+    if (!src || preImg[src]) return;
+    var im = new Image(); im.decoding = 'async'; im.src = src; preImg[src] = im;
+    if (im.decode) im.decode().catch(function () {});
+  }
+  function preloadStep(st) {
+    if (!st) return;
+    preloadSrc(st.image);
+    (st.options || []).forEach(function (o) { preloadSrc(o.img); });
+  }
+  function preloadAhead(i) { for (var k = 1; k <= 3; k++) preloadStep(STEPS[i + k]); }
+  function preloadAll() {
+    var i = 0;
+    (function nx() {
+      if (i >= STEPS.length) return;
+      preloadStep(STEPS[i++]);
+      (window.requestIdleCallback || function (f) { setTimeout(f, 60); })(nx);
+    })();
+  }
+  window.addEventListener('load', function () { setTimeout(preloadAll, 400); });
 
   function goNext() {
     var cur = STEPS[state.idx];
@@ -469,13 +493,13 @@
     var fill = wrap.querySelector('#el-fill');
     var pct = 0;
     var iv = setInterval(function () {
-      pct = Math.min(100, pct + 8);
+      pct = Math.min(100, pct + 10);
       fill.style.width = pct + '%';
       if (pct >= 100) {
         clearInterval(iv);
-        addTimer(function () { goTo(1); }, 280);
+        addTimer(function () { goTo(1); }, 150);
       }
-    }, 150);
+    }, 100);
     state.timers.push(iv);
   }
 
@@ -506,7 +530,7 @@
         btn.classList.add('is-selected');
         btn.querySelector('.radio-ring').innerHTML = CHECK_SVG;
         state.answers[step.key] = btn.getAttribute('data-val');
-        addTimer(goNext, 220);
+        addTimer(goNext, 110);
       });
     });
   }
@@ -548,7 +572,7 @@
         btn.classList.add('is-selected');
         btn.querySelector('.radio-ring').innerHTML = CHECK_SVG;
         state.answers[step.key] = btn.getAttribute('data-val');
-        addTimer(goNext, 210);
+        addTimer(goNext, 110);
       });
     });
   }
@@ -641,7 +665,7 @@
         tile.classList.add('is-selected');
         tile.querySelector('.radio-ring').innerHTML = CHECK_SVG;
         state.answers[step.key] = tile.getAttribute('data-val');
-        addTimer(goNext, 220);
+        addTimer(goNext, 110);
       });
     });
   }
@@ -700,7 +724,7 @@
         btn.classList.add('is-selected');
         btn.querySelector('.radio-ring').innerHTML = CHECK_SVG;
         state.answers[step.key] = btn.getAttribute('data-val');
-        addTimer(goNext, 210);
+        addTimer(goNext, 110);
       });
     });
   }
@@ -802,7 +826,7 @@
         btn.classList.add('is-selected');
         btn.querySelector('.radio-ring').innerHTML = CHECK_SVG;
         state.answers[step.key] = btn.getAttribute('data-val');
-        addTimer(goNext, 210);
+        addTimer(goNext, 110);
       });
     });
   }
@@ -900,7 +924,7 @@
         wrap.querySelectorAll('.answer-card').forEach(function (b) { b.classList.remove('is-selected'); });
         btn.classList.add('is-selected');
         state.answers[step.key] = btn.getAttribute('data-val');
-        addTimer(goNext, 210);
+        addTimer(goNext, 110);
       });
     });
   }
@@ -1013,7 +1037,7 @@
         btn.classList.add('is-selected');
         btn.querySelector('.radio-ring').innerHTML = CHECK_SVG;
         state.answers[step.key] = btn.getAttribute('data-val');
-        addTimer(goNext, 210);
+        addTimer(goNext, 110);
       });
     });
   }
