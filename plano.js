@@ -10,8 +10,8 @@
   // fotos do topo conforme o quiz: ANTES = porte físico atual, DEPOIS = físico que ele quer
   var ANTES = { 'Magro': 'magro', 'Porte médio': 'medio', 'Forte / encorpado': 'encorpado', 'Acima do peso': 'acima' };
   var DEPOIS = { 'Alguns quilos a menos': 'seco', 'Atlético': 'atletico', 'Definido': 'definido', 'Forte e volumoso': 'forte' };
-  var imgA = ANTES[A.porte] ? 'assets/sda/ba/antes-' + ANTES[A.porte] + '.webp' : 'assets/sda/sda-antes-b901f6.webp';
-  var imgD = DEPOIS[A.fisico] ? 'assets/sda/ba/depois-' + DEPOIS[A.fisico] + '.webp' : (ANTES[A.porte] ? 'assets/sda/ba/depois-definido.webp' : 'assets/sda/sda-depois-1db9e5.webp');
+  var imgA = ANTES[A.porte] ? 'assets/sda/ba/antes-' + ANTES[A.porte] + '.webp?v=2' : 'assets/sda/sda-antes-b901f6.webp';
+  var imgD = DEPOIS[A.fisico] ? 'assets/sda/ba/depois-' + DEPOIS[A.fisico] + '.webp?v=2' : (ANTES[A.porte] ? 'assets/sda/ba/depois-definido.webp?v=2' : 'assets/sda/sda-depois-1db9e5.webp');
   var porteTx = { 'Forte / encorpado': 'Encorpado' }[A.porte] || A.porte;
   var fisTx = { 'Alguns quilos a menos': 'Mais seco' }[A.fisico] || A.fisico;
   var freqTx = A.freq ? A.freq.replace(' vezes', 'x') + '/semana' : '';
