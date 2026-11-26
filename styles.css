@@ -1897,16 +1897,8 @@ button, .answer-card, a { touch-action: manipulation; -webkit-tap-highlight-colo
   .bmi-attr-list { gap: 10px; padding-bottom: 14px; }
   .bmi-attr-row strong { font-size: 0.84rem; }
   .bmi-avatar-right img { height: 210px; }
-  .split-hero-stage { min-height: 330px; }
 }
 
-/* telas baixas (iPhone SE / Android pequeno): imagens menores para o texto caber acima do botão */
-@media (max-height: 760px) {
-  .media-frame img { max-height: 31vh; object-fit: cover; object-position: center 22%; }
-  .four-week-card { padding-top: 18px; }
-  .split-hero-stage { min-height: 300px; }
-  .bmi-avatar-right img { height: 190px; }
-}
 /* IMC: foto grande no canto, sem cortar (sobrepõe o layout anterior) */
 .bmi-bottom-split { display: block; position: relative; min-height: 230px; }
 .bmi-attr-list { position: relative; z-index: 2; max-width: 58%; }
