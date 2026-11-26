@@ -1881,3 +1881,36 @@ a {
 /* toque instantâneo e animação na GPU */
 button, .answer-card, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .stage-view { will-change: opacity, transform; }
+
+/* ==================== AJUSTES MOBILE (26/11) ==================== */
+/* IMC: foto inteira (sem cortar) alinhada embaixo do card */
+.bmi-bottom-split { grid-template-columns: 1fr 0.9fr; align-items: end; }
+.bmi-avatar-right { align-self: stretch; display: flex; align-items: flex-end; justify-content: center; }
+.bmi-avatar-right img { width: auto; max-width: 100%; height: 232px; object-fit: contain; object-position: bottom center; }
+
+@media (max-width: 430px) {
+  .bm-title { font-size: 1.44rem; }
+  .bmi-panel { padding: 14px 12px 0; }
+  .bmi-callout-area { height: 38px; }
+  .bmi-risk-box { padding: 10px 12px; margin-bottom: 12px; }
+  .bmi-risk-box p { font-size: 0.75rem; line-height: 1.38; }
+  .bmi-attr-list { gap: 10px; padding-bottom: 14px; }
+  .bmi-attr-row strong { font-size: 0.84rem; }
+  .bmi-avatar-right img { height: 210px; }
+  .split-hero-stage { min-height: 330px; }
+}
+
+/* telas baixas (iPhone SE / Android pequeno): imagens menores para o texto caber acima do botão */
+@media (max-height: 760px) {
+  .media-frame img { max-height: 31vh; object-fit: cover; object-position: center 22%; }
+  .four-week-card { padding-top: 18px; }
+  .split-hero-stage { min-height: 300px; }
+  .bmi-avatar-right img { height: 190px; }
+}
+/* IMC: foto grande no canto, sem cortar (sobrepõe o layout anterior) */
+.bmi-bottom-split { display: block; position: relative; min-height: 230px; }
+.bmi-attr-list { position: relative; z-index: 2; max-width: 58%; }
+.bmi-avatar-right { position: absolute; right: -10px; bottom: 0; top: -24px; width: 50%; z-index: 1; display: flex; align-items: flex-end; justify-content: center; }
+.bmi-avatar-right img { width: 100%; height: 100%; max-height: none; object-fit: contain; object-position: bottom center; }
+@media (max-width: 430px) { .bmi-bottom-split { min-height: 215px; } .bmi-avatar-right { width: 48%; } .bmi-avatar-right img { height: 100%; } }
+@media (max-height: 760px) { .bmi-avatar-right img { height: 100%; } }

@@ -168,7 +168,7 @@ window.TREINO_DE_ACO_STEPS = [
     section: 1, sectionLabel: 'Meu Perfil', segPct: 88.9,
     key: 'variacaoPeso',
     title: 'Como seu peso costuma variar?',
-    image: 'assets/img/forearm_plank.webp',
+    image: 'assets/img/forearm_plank-v.webp',
     wideOptions: true,
     options: [
       { value: 'Ectomorfo', label: 'Tenho dificuldade para ganhar peso ou músculo' },
@@ -631,7 +631,7 @@ window.TREINO_DE_ACO_STEPS = [
     id: 'wellness_profile',
     type: 'bmiWellness',
     header: 'brand',
-    title: 'Aqui está seu perfil de bem-estar',
+    title: 'Aqui está seu perfil de bem‑estar',
     cta: 'CONTINUAR'
   },
 
