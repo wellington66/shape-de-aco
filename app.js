@@ -224,10 +224,10 @@
 
   function getAvatarByBuild() {
     var b = state.answers.porteFisico;
-    if (b === 'Magro') return 'assets/img/body_1.webp';
-    if (b === 'Porte médio') return 'assets/img/body_2.webp';
-    if (b === 'Acima do peso') return 'assets/img/body_4.webp';
-    return 'assets/img/body_3.webp';
+    if (b === 'Magro') return 'assets/img/body_1-sf.webp';
+    if (b === 'Porte médio') return 'assets/img/body_2-sf.webp';
+    if (b === 'Acima do peso') return 'assets/img/body_4-sf.webp';
+    return 'assets/img/body_3-sf.webp';
   }
 
   function getGoalPhraseLower() {
@@ -399,6 +399,7 @@
   }
   function preloadAhead(i) { for (var k = 1; k <= 3; k++) preloadStep(STEPS[i + k]); }
   function preloadAll() {
+    [1, 2, 3, 4].forEach(function (n) { preloadSrc('assets/img/body_' + n + '-sf.webp'); });
     var i = 0;
     (function nx() {
       if (i >= STEPS.length) return;

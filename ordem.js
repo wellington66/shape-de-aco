@@ -34,11 +34,11 @@
   // ---- benefícios (bloco novo, mesmo visual dos separadores e cartões da página) ----
   var css = document.createElement('style');
   css.textContent = '#sda-benef{padding:4px 16px 8px;max-width:520px;margin:0 auto;width:100%;box-sizing:border-box}' +
-    '#sda-benef h3{font-size:24px;font-weight:700;line-height:1.2;text-align:center;color:#E8EBEF;margin:4px 0 16px}' +
+    '#sda-benef h3{font-size:24px;font-weight:700;line-height:1.2;text-align:center;color:#EBE1D3;margin:4px 0 16px}' +
     '#sda-benef ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}' +
-    '#sda-benef li{display:flex;gap:12px;align-items:flex-start;background:#16181C;border:1px solid #2a2d33;border-radius:16px;padding:14px}' +
-    '#sda-benef li i{flex:none;width:26px;height:26px;border-radius:50%;background:#FF5B1F;color:#0B0C0E;font-style:normal;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}' +
-    '#sda-benef b{display:block;color:#E8EBEF;font-size:16px;margin-bottom:2px}#sda-benef span{color:#A9B0B9;font-size:14px;line-height:1.4}';
+    '#sda-benef li{display:flex;gap:12px;align-items:flex-start;background:#201E19;border:1px solid #2E2B24;border-radius:16px;padding:14px}' +
+    '#sda-benef li i{flex:none;width:26px;height:26px;border-radius:50%;background:#A6A055;color:#050300;font-style:normal;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}' +
+    '#sda-benef b{display:block;color:#EBE1D3;font-size:16px;margin-bottom:2px}#sda-benef span{color:#B3AA9C;font-size:14px;line-height:1.4}';
   css.textContent += '#sda-provas .pv-quotes{display:none}.pv-bonus .pv-car{display:none}'; // e sem o carrossel de prints da comunidade no bônus // 25/11: sem as 2 mensagens de elogio abaixo dos prints
   document.head.appendChild(css);
   var bSep = sBon.cloneNode(true); bSep.textContent = 'BENEFÍCIOS';

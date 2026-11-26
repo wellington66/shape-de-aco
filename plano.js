@@ -37,29 +37,29 @@
     bio === 'Ectomorfo' ? 'Seu corpo tem dificuldade de ganhar massa, então o plano foca em força e músculo.' :
     bio === 'Mesomorfo' ? 'Seu corpo responde rápido ao treino, então o plano acelera definição e força.' :
     'Cada corpo responde de um jeito, por isso o plano é ajustado ao seu.';
-  var css = '.sda-hero{width:100%;box-sizing:border-box;padding:0 4px;font-family:var(--font),sans-serif;color:#E8EBEF}' +
+  var css = '.sda-hero{width:100%;box-sizing:border-box;padding:0 4px;font-family:var(--font),sans-serif;color:#EBE1D3}' +
     '.sda-hero *{box-sizing:border-box}' +
-    '.sda-sel{display:flex;align-items:center;gap:8px;justify-content:center;background:rgba(58,174,146,.14);border:1px solid rgba(58,174,146,.5);color:#8FE0C8;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:700;letter-spacing:.3px;margin:4px auto 12px;width:max-content;max-width:100%}' +
-    '.sda-t{font-size:23px;line-height:1.2;font-weight:800;text-align:center;margin:0 0 8px}.sda-t em{font-style:normal;color:#FF5B1F}' +
-    '.sda-s{font-size:14.5px;line-height:1.45;color:#A9B0B9;text-align:center;margin:0 4px 14px}.sda-s b{color:#E8EBEF}' +
-    '.sda-ck{list-style:none;margin:0 0 14px;padding:12px 14px;background:#16181C;border:1px solid #2a2d33;border-radius:16px}' +
+    '.sda-sel{display:flex;align-items:center;gap:8px;justify-content:center;background:rgba(166,160,85,.16);border:1px solid rgba(166,160,85,.5);color:#C9C27A;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:700;letter-spacing:.3px;margin:4px auto 12px;width:max-content;max-width:100%}' +
+    '.sda-t{font-size:23px;line-height:1.2;font-weight:800;text-align:center;margin:0 0 8px}.sda-t em{font-style:normal;color:#A6A055}' +
+    '.sda-s{font-size:14.5px;line-height:1.45;color:#B3AA9C;text-align:center;margin:0 4px 14px}.sda-s b{color:#EBE1D3}' +
+    '.sda-ck{list-style:none;margin:0 0 14px;padding:12px 14px;background:#201E19;border:1px solid #2E2B24;border-radius:16px}' +
     '.sda-ck li{display:flex;align-items:center;gap:10px;font-size:14px;padding:5px 0}' +
-    '.sda-ck li:before{content:"✓";flex:none;width:20px;height:20px;border-radius:50%;background:#3AAE92;color:#0B0C0E;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center}' +
-    '.sda-card{background:#16181C;border:1px solid #2a2d33;border-radius:16px;padding:14px;margin-bottom:14px}' +
-    '.sda-card h4{margin:0 0 10px;font-size:15px;font-weight:800;text-align:center}.sda-card h4 em{font-style:normal;color:#FF5B1F}' +
+    '.sda-ck li:before{content:"✓";flex:none;width:20px;height:20px;border-radius:50%;background:#3AAE92;color:#050300;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center}' +
+    '.sda-card{background:#201E19;border:1px solid #2E2B24;border-radius:16px;padding:14px;margin-bottom:14px}' +
+    '.sda-card h4{margin:0 0 10px;font-size:15px;font-weight:800;text-align:center}.sda-card h4 em{font-style:normal;color:#A6A055}' +
     '.sda-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}' +
-    '.sda-grid div{background:#0B0C0E;border-radius:12px;padding:10px}.sda-grid small{display:block;font-size:11px;color:#A9B0B9;margin-bottom:2px}.sda-grid b{display:block;font-size:14px;font-weight:800;line-height:1.25}' +
-    '.sda-card p{margin:10px 0 0;font-size:13.5px;color:#C9CED5;text-align:center;line-height:1.45}' +
+    '.sda-grid div{background:#050300;border-radius:12px;padding:10px}.sda-grid small{display:block;font-size:11px;color:#B3AA9C;margin-bottom:2px}.sda-grid b{display:block;font-size:14px;font-weight:800;line-height:1.25}' +
+    '.sda-card p{margin:10px 0 0;font-size:13.5px;color:#D3C9BB;text-align:center;line-height:1.45}' +
     '.sda-ba{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px}' +
-    '.sda-ba figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#1A1C20;aspect-ratio:4/5}' +
+    '.sda-ba figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#201E19;aspect-ratio:4/5}' +
     '.sda-ba img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 12%}' +
-    '.sda-ba figcaption{position:absolute;left:8px;right:8px;bottom:8px;text-align:center;font-size:12px;font-weight:800;letter-spacing:.6px;padding:7px 4px;border-radius:10px;background:rgba(11,12,14,.82);color:#E8EBEF}' +
-    '.sda-ba figure.dep{box-shadow:0 0 0 2px #FF5B1F}.sda-ba figure.dep figcaption{background:#FF5B1F;color:#0B0C0E}' +
-    '.sda-ba .seta{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:#FF5B1F;color:#0B0C0E;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;z-index:2;border:3px solid #0B0C0E}' +
-    '.sda-nt{font-size:11.5px;color:#7D858F;text-align:center;margin:8px 0 14px}' +
-    '.sda-inc{list-style:none;margin:0 0 14px;padding:0}.sda-inc li{display:flex;gap:10px;font-size:14px;line-height:1.4;padding:6px 0;border-bottom:1px solid #22252a}.sda-inc li:last-child{border:0}.sda-inc li:before{content:"→";color:#FF5B1F;font-weight:900}' +
-    '.sda-cta{display:block;width:100%;text-align:center;background:#FF5B1F;color:#0B0C0E;font-weight:800;font-size:16px;border-radius:24px;padding:15px 12px;text-decoration:none;margin-bottom:6px}' +
-    '.sda-fn{font-size:12px;color:#A9B0B9;text-align:center;margin:0 0 6px}';
+    '.sda-ba figcaption{position:absolute;left:8px;right:8px;bottom:8px;text-align:center;font-size:12px;font-weight:800;letter-spacing:.6px;padding:7px 4px;border-radius:10px;background:rgba(11,12,14,.82);color:#EBE1D3}' +
+    '.sda-ba figure.dep{box-shadow:0 0 0 2px #A6A055}.sda-ba figure.dep figcaption{background:#A6A055;color:#050300}' +
+    '.sda-ba .seta{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:#A6A055;color:#050300;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;z-index:2;border:3px solid #050300}' +
+    '.sda-nt{font-size:11.5px;color:#8C8478;text-align:center;margin:8px 0 14px}' +
+    '.sda-inc{list-style:none;margin:0 0 14px;padding:0}.sda-inc li{display:flex;gap:10px;font-size:14px;line-height:1.4;padding:6px 0;border-bottom:1px solid #2A2720}.sda-inc li:last-child{border:0}.sda-inc li:before{content:"→";color:#A6A055;font-weight:900}' +
+    '.sda-cta{display:block;width:100%;text-align:center;background:#A6A055;color:#050300;font-weight:800;font-size:16px;border-radius:24px;padding:15px 12px;text-decoration:none;margin-bottom:6px}' +
+    '.sda-fn{font-size:12px;color:#B3AA9C;text-align:center;margin:0 0 6px}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var box = document.createElement('div'); box.className = 'sda-hero';
   box.innerHTML =
