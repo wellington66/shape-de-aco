@@ -361,14 +361,36 @@
   }
 
   /* ==================== NAVIGATION WITH BETTERME FADE TRANSITION ==================== */
-  function goTo(nextIdx, isBack) {
+  function isAutoLoader(idx) {
+    var st = STEPS[idx];
+    return !!(st && (st.type === 'entryLoader' || st.type === 'barLoader' || st.type === 'ringLoader' || st.type === 'startTodaySplash'));
+  }
+
+  var browserDepth = 0;
+  function syncBrowserHistory(prevIdx, nextIdx, isBack, fromPop) {
+    if (fromPop || !window.history || !window.history.pushState) return;
+    try {
+      if (isBack) return;
+      if (isAutoLoader(nextIdx)) return;
+      if (prevIdx === 0 && isAutoLoader(0)) {
+        window.history.replaceState({ sdaStep: nextIdx, sdaDepth: browserDepth }, '', location.href);
+        return;
+      }
+      browserDepth += 1;
+      window.history.pushState({ sdaStep: nextIdx, sdaDepth: browserDepth }, '', location.href);
+    } catch (e) {}
+  }
+
+  function goTo(nextIdx, isBack, fromPop) {
     if (nextIdx < 0 || nextIdx >= STEPS.length) return;
     clearStepTimers();
 
+    var prevIdx = state.idx;
     var currentView = elStage.querySelector('.stage-view');
     var commit = function () {
-      if (!isBack && state.idx !== nextIdx) {
-        state.history.push(state.idx);
+      if (!isBack && prevIdx !== nextIdx) {
+        state.history.push(prevIdx);
+        syncBrowserHistory(prevIdx, nextIdx, false, fromPop);
       }
       state.idx = nextIdx;
       renderCurrentStep();
@@ -377,7 +399,7 @@
       cl('set', 'etapa', 's' + nextIdx + '_' + STEPS[nextIdx].id);
     };
 
-    if (currentView && !isBack && state.idx !== nextIdx) {
+    if (currentView && !isBack && prevIdx !== nextIdx) {
       currentView.classList.add('is-leaving');
       addTimer(commit, 110);
     } else {
@@ -420,11 +442,28 @@
   }
 
   elBtnBack.addEventListener('click', function () {
+    if (browserDepth > 0 && window.history && window.history.back) {
+      window.history.back();
+      return;
+    }
     var prev = state.history.pop();
-    while (prev !== undefined && (STEPS[prev].type === 'entryLoader' || STEPS[prev].type === 'barLoader' || STEPS[prev].type === 'ringLoader' || STEPS[prev].type === 'startTodaySplash')) {
+    while (prev !== undefined && isAutoLoader(prev)) {
       prev = state.history.pop();
     }
-    if (prev !== undefined) goTo(prev, true);
+    if (prev !== undefined) goTo(prev, true, true);
+  });
+
+  window.addEventListener('popstate', function (e) {
+    if (!e.state || typeof e.state.sdaStep !== 'number') return;
+    var target = e.state.sdaStep;
+    if (typeof e.state.sdaDepth === 'number') browserDepth = e.state.sdaDepth;
+    else browserDepth = Math.max(0, browserDepth - 1);
+    while (state.history.length > 0 && state.history[state.history.length - 1] >= target) {
+      state.history.pop();
+    }
+    if (target >= 0 && target < STEPS.length && target !== state.idx) {
+      goTo(target, true, true);
+    }
   });
 
   /* ==================== SVG ICON SNIPPETS ==================== */
@@ -1848,8 +1887,11 @@
   var qsStep = parseInt(new URLSearchParams(location.search).get('step'), 10);
   if (!isNaN(qsStep) && qsStep >= 0 && qsStep < STEPS.length) {
     state.idx = qsStep;
-    renderCurrentStep();
-  } else {
-    renderCurrentStep();
   }
+  try {
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({ sdaStep: state.idx, sdaDepth: 0 }, '', location.href);
+    }
+  } catch (e) {}
+  renderCurrentStep();
 })();
