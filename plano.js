@@ -6,7 +6,16 @@
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var kg = function (n) { return Math.round(n) + ' kg'; };
   var bio = ['Ectomorfo', 'Mesomorfo', 'Endomorfo'][A['singleSelect_21642']];
-  var fx = A['singleSelect_21644'], nivel = fx == null ? 'Iniciante' : ['Iniciante', 'Iniciante', 'Intermediário', 'Avançado'][fx];
+  var fx = A['singleSelect_21644'], nivel = A.nivel || (fx == null ? 'Iniciante' : ['Iniciante', 'Iniciante', 'Intermediário', 'Avançado'][fx]);
+  // fotos do topo conforme o quiz: ANTES = porte físico atual, DEPOIS = físico que ele quer
+  var ANTES = { 'Magro': 'magro', 'Porte médio': 'medio', 'Forte / encorpado': 'encorpado', 'Acima do peso': 'acima' };
+  var DEPOIS = { 'Alguns quilos a menos': 'seco', 'Atlético': 'atletico', 'Definido': 'definido', 'Forte e volumoso': 'forte' };
+  var imgA = ANTES[A.porte] ? 'assets/sda/ba/antes-' + ANTES[A.porte] + '.webp' : 'assets/sda/sda-antes-b901f6.webp';
+  var imgD = DEPOIS[A.fisico] ? 'assets/sda/ba/depois-' + DEPOIS[A.fisico] + '.webp' : (ANTES[A.porte] ? 'assets/sda/ba/depois-definido.webp' : 'assets/sda/sda-depois-1db9e5.webp');
+  var porteTx = { 'Forte / encorpado': 'Encorpado' }[A.porte] || A.porte;
+  var fisTx = { 'Alguns quilos a menos': 'Mais seco' }[A.fisico] || A.fisico;
+  var freqTx = A.freq ? A.freq.replace(' vezes', 'x') + '/semana' : '';
+  var durTx = A.duracao && A.duracao !== 'Não sei' ? A.duracao : '';
   var nome = A.nome ? esc(A.nome) : '';
   var imc = (A.h && A.w) ? A.w / Math.pow(A.h / 100, 2) : 0;
   var faixa = !imc ? '' : imc < 18.5 ? 'abaixo do ideal' : imc < 25 ? 'na faixa normal' : imc < 30 ? 'acima do ideal' : 'acima do ideal';
@@ -14,8 +23,14 @@
   var lido = [];
   if (A.w && A.g) lido.push(['Peso', kg(A.w) + ' → meta ' + kg(A.g)]);
   if (imc) lido.push(['IMC', imc.toFixed(1).replace('.', ',') + ' (' + faixa + ')']);
-  if (bio) lido.push(['Biotipo', bio]);
+  if (porteTx) lido.push(['Corpo hoje', porteTx + (fisTx ? ' → ' + fisTx : '')]);
+  else if (bio) lido.push(['Biotipo', bio]);
   lido.push(['Nível', nivel]);
+  if (durTx || freqTx) lido.push(['Seu treino', [durTx, freqTx].filter(Boolean).join(' · ')]);
+  if (A.intensidade) lido.push(['Intensidade', A.intensidade]);
+  if (A.areas && A.areas.length && A.areas[0] !== 'Nenhuma das anteriores') lido.push(['Foco', A.areas.slice(0, 2).join(', ')]);
+  if (A.objetivo) lido.push(['Objetivo', A.objetivo]);
+  if (lido.length % 2) lido[lido.length - 1].push('full');
   var motivo = bio === 'Endomorfo' ? 'Seu corpo acumula gordura com facilidade, então o plano combina queima de gordura com força.' :
     bio === 'Ectomorfo' ? 'Seu corpo tem dificuldade de ganhar massa, então o plano foca em força e músculo.' :
     bio === 'Mesomorfo' ? 'Seu corpo responde rápido ao treino, então o plano acelera definição e força.' :
@@ -48,13 +63,13 @@
   box.innerHTML =
     '<div class="sda-sel">✓ ANÁLISE CONCLUÍDA</div>' +
     '<h2 class="sda-t">' + (nome ? nome + ', seu' : 'Seu') + ' plano <em>personalizado</em> está pronto</h2>' +
-    '<div class="sda-ba"><figure><img src="assets/sda/sda-antes-b901f6.webp" alt="Antes" fetchpriority="high"><figcaption>HOJE</figcaption></figure><div class="seta">›</div>' +
-    '<figure class="dep"><img src="assets/sda/sda-depois-1db9e5.webp" alt="Depois" fetchpriority="high"><figcaption>EM 28 DIAS</figcaption></figure></div>' +
+    '<div class="sda-ba"><figure><img src="' + imgA + '" alt="Antes" fetchpriority="high"><figcaption>HOJE</figcaption></figure><div class="seta">›</div>' +
+    '<figure class="dep"><img src="' + imgD + '" alt="Depois" fetchpriority="high"><figcaption>EM 28 DIAS</figcaption></figure></div>' +
     '<p class="sda-nt">Imagem ilustrativa. Resultados variam de pessoa para pessoa.</p>' +
     '<div class="sda-card"><h4>O que suas respostas <em>revelaram</em></h4><div class="sda-grid">' +
-    lido.map(function (i) { return '<div><small>' + i[0] + '</small><b>' + esc(i[1]) + '</b></div>'; }).join('') +
+    lido.map(function (i) { return '<div' + (i[2] ? ' style="grid-column:1/-1"' : '') + '><small>' + i[0] + '</small><b>' + esc(i[1]) + '</b></div>'; }).join('') +
     '</div></div>' +
-    '<a class="sda-cta" href="#oferta">Quero meu plano personalizado</a><p class="sda-fn">Pagamento único · Acesso imediato · 30 dias de garantia</p>';
+    '<a class="sda-cta" href="#oferta">Quero meu plano personalizado</a><p class="sda-fn">Pagamento único · Acesso vitalício · 30 dias de garantia</p>';
   Array.prototype.slice.call(hero.children).forEach(function (c) { c.style.display = 'none'; });
   hero.insertBefore(box, hero.firstChild);
 
@@ -69,7 +84,7 @@
     var grupo = [], n = sRec;
     while (n && n !== sPara) { grupo.push(n); n = n.nextElementSibling; }
     var cta = document.createElement('div'); cta.className = 'sda-bloco pv';
-    cta.innerHTML = '<a class="pv-cta" href="#oferta">Quero receber tudo isso agora</a><p class="sda-fn" style="margin-top:8px">Pagamento único · Acesso imediato · 30 dias de garantia</p>';
+    cta.innerHTML = '<a class="pv-cta" href="#oferta">Quero receber tudo isso agora</a><p class="sda-fn" style="margin-top:8px">Pagamento único · Acesso vitalício · 30 dias de garantia</p>';
     grupo.forEach(function (g) { sRes.parentNode.insertBefore(g, sRes); });
     sRes.parentNode.insertBefore(cta, sRes);
   }

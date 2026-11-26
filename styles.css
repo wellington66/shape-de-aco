@@ -1,0 +1,1877 @@
+/* ==========================================================================
+   TREINO DE AÇO — BetterMe Military Workouts Exact Design System (PT-BR)
+   Extracted tokens: #050300, #23211D, #201E19, #EBE1D3, #888342, #816955
+   ========================================================================== */
+
+:root {
+  --bg-primary: #050300;
+  --bg-secondary: #23211d;
+  --bg-answer: #201e19;
+  --bg-answer-hover: #292620;
+  --bg-answer-active: #ebe1d3;
+  --bg-tertiary: rgba(235, 225, 211, 0.1);
+  --border-subtle: rgba(235, 225, 211, 0.12);
+  --border-tertiary: rgba(235, 225, 211, 0.2);
+  --border-secondary: rgba(235, 225, 211, 0.6);
+
+  --text-primary: #ebe1d3;
+  --text-secondary: rgba(235, 225, 211, 0.8);
+  --text-tertiary: rgba(235, 225, 211, 0.56);
+  --text-inverse: #050300;
+
+  --accent-olive: #888342;
+  --accent-olive-mid: rgba(136, 131, 66, 0.5);
+  --accent-olive-light: rgba(136, 131, 66, 0.16);
+  --input-underline: #816955;
+
+  --status-positive: #3aae92;
+  --status-positive-bg: rgba(58, 174, 146, 0.14);
+  --status-warning: #e0d422;
+  --status-warning-bg: rgba(224, 212, 34, 0.14);
+  --status-alert: #ee505a;
+  --status-alert-bg: rgba(238, 80, 90, 0.16);
+  --link-blue: #569df3;
+
+  --radius-card: 16px;
+  --radius-btn: 24px;
+  --btn-height: 48px;
+  --header-height: 56px;
+  --max-w: 440px;
+
+  --dur-hide: 240ms;
+  --dur-show: 420ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-display: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, "Playfair Display", "Times New Roman", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.45;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+a {
+  color: var(--link-blue);
+}
+
+/* ==================== APP SHELL ==================== */
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+/* ==================== HEADER (56px) ==================== */
+.bm-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.bm-header.is-transparent {
+  background: transparent;
+  border-bottom-color: transparent;
+}
+
+.bm-header.is-hidden {
+  display: none;
+}
+
+.bm-header-bar {
+  max-width: var(--max-w);
+  height: var(--header-height);
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+
+.icon-btn:hover {
+  background: var(--bg-tertiary);
+}
+
+.icon-btn.is-invisible {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.brand-wordmark {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.06rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  user-select: none;
+}
+
+.brand-wordmark span {
+  color: var(--accent-olive);
+}
+
+.progress-header-center {
+  text-align: center;
+  padding: 0 4px;
+}
+
+.progress-section-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+.progress-5-segs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.p5-track {
+  height: 3.5px;
+  border-radius: 999px;
+  background: rgba(235, 225, 211, 0.18);
+  overflow: hidden;
+}
+
+.p5-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text-primary);
+  border-radius: 999px;
+  transition: width 0.38s var(--ease-out);
+}
+
+/* ==================== STAGE & ANIMATIONS ==================== */
+.bm-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 18px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.bm-main.has-sticky-cta {
+  padding-bottom: 102px;
+}
+
+.bm-main.is-fullscreen {
+  padding: 0 16px;
+  justify-content: center;
+}
+
+.stage-view {
+  animation: bmEnter var(--dur-show) var(--ease-out) both;
+}
+
+.stage-view.is-leaving {
+  animation: bmLeave var(--dur-hide) ease forwards;
+}
+
+@keyframes bmEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bmLeave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+.bm-title {
+  font-family: var(--font-display);
+  font-size: 1.62rem;
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--text-primary);
+  margin: 0 0 10px 0;
+  letter-spacing: -0.02em;
+}
+
+.bm-title.center {
+  text-align: center;
+}
+
+.bm-title .accent {
+  color: var(--accent-olive);
+}
+
+.bm-sub {
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  margin: 0 0 18px 0;
+  line-height: 1.48;
+}
+
+.bm-sub.center {
+  text-align: center;
+}
+
+.bm-kicker {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin: 0 0 22px 0;
+  line-height: 1.45;
+}
+
+.bm-kicker strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* ==================== STEP 0: ENTRY LOADER ==================== */
+.entry-loader-wrap {
+  min-height: calc(100dvh - 30px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 8px;
+}
+
+.entry-loader-title {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin: 0 0 20px 0;
+}
+
+.entry-loader-hero {
+  width: 260px;
+  max-width: 78%;
+  margin: 0 auto 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 48%, #000 58%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 48%, #000 58%, transparent 100%);
+}
+
+.entry-loader-hero img {
+  width: 100%;
+  height: auto;
+  animation: heroPulseZoom 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes heroPulseZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.045); }
+}
+
+.entry-loader-bar-track {
+  width: 220px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(235, 225, 211, 0.16);
+  overflow: hidden;
+  margin: 0 auto 18px;
+}
+
+.entry-loader-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-olive), var(--text-primary));
+  transition: width 0.25s linear;
+}
+
+.entry-loader-note {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.entry-loader-sub {
+  font-size: 0.86rem;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* ==================== SPLIT HERO SCREEN (Step 1 & Right-Hero Questions) ==================== */
+.split-hero-stage {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.split-bg-figure {
+  position: absolute;
+  right: -16px;
+  top: 0;
+  bottom: 0;
+  width: 60%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.split-bg-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.85) 32%, #000 100%),
+              linear-gradient(180deg, transparent 0%, #000 12%, #000 84%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.85) 32%, #000 100%);
+}
+
+.split-options-col {
+  position: relative;
+  z-index: 2;
+  width: 56%;
+  min-width: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.split-options-col.wide {
+  width: 68%;
+}
+
+/* ==================== ANSWER CARDS (EXACT BETTERME #201E19 -> #EBE1D3) ==================== */
+.answer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.answer-card {
+  width: 100%;
+  min-height: 70px;
+  padding: 14px 16px;
+  border-radius: var(--radius-card);
+  border: 1.5px solid transparent;
+  background: var(--bg-answer);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.12s ease;
+}
+
+.answer-card:hover {
+  background: var(--bg-answer-hover);
+}
+
+.answer-card:active {
+  transform: scale(0.985);
+}
+
+.answer-card.is-selected {
+  background: var(--bg-answer-active);
+  color: var(--text-inverse);
+  border-color: var(--bg-answer-active);
+}
+
+.answer-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.answer-label {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.answer-desc {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-top: 3px;
+  font-weight: 400;
+}
+
+.answer-card.is-selected .answer-desc {
+  color: rgba(5, 3, 0, 0.72);
+}
+
+/* Radio / Checkbox Indicators */
+.radio-ring {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(235, 225, 211, 0.4);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.16s ease;
+}
+
+.answer-card.is-selected .radio-ring {
+  border-color: var(--text-inverse);
+  background: var(--text-inverse);
+  color: var(--text-primary);
+}
+
+.check-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(235, 225, 211, 0.42);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: all 0.16s ease;
+}
+
+.answer-card.is-selected .check-box,
+.pic-row-card.is-selected .check-box,
+.photo-tile.is-selected .check-box {
+  background: var(--text-inverse);
+  border-color: var(--text-inverse);
+  color: var(--text-primary);
+}
+
+/* Circular 40x40 Icon Badge (Steps 39, 47, 48, 51) */
+.circle-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(235, 225, 211, 0.08);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.15rem;
+}
+
+.answer-card.is-selected .circle-icon {
+  background: rgba(5, 3, 0, 0.12);
+  color: var(--text-inverse);
+}
+
+.group-heading {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 16px 0 8px 4px;
+}
+
+.group-heading:first-child {
+  margin-top: 2px;
+}
+
+/* ==================== 2x2 PHOTO GRID (Steps 8, 9, 25) ==================== */
+.photo-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 11px;
+}
+
+.photo-tile {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--bg-answer);
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.16s ease, transform 0.12s ease;
+}
+
+.photo-tile:active {
+  transform: scale(0.98);
+}
+
+.photo-tile.is-selected {
+  border-color: var(--text-primary);
+}
+
+.photo-tile-img {
+  width: 100%;
+  aspect-ratio: 3 / 3.55;
+  overflow: hidden;
+  background: #171511;
+}
+
+.photo-tile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.photo-tile-bar {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: var(--bg-answer);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.photo-tile.is-selected .photo-tile-bar {
+  background: var(--bg-answer-active);
+  color: var(--text-inverse);
+}
+
+/* ==================== PROBLEM AREAS HORIZONTAL PICTURE CARDS (Step 10) ==================== */
+.pic-row-card {
+  width: 100%;
+  height: 82px;
+  padding: 0 0 0 18px;
+  border-radius: var(--radius-card);
+  border: 1.5px solid transparent;
+  background: var(--bg-answer);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.pic-row-card.is-selected {
+  background: var(--bg-answer-active);
+  color: var(--text-inverse);
+}
+
+.pic-row-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pic-row-thumb {
+  width: 106px;
+  height: 82px;
+  object-fit: cover;
+  object-position: center;
+  flex-shrink: 0;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 22%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%);
+}
+
+/* ==================== TOP-IMAGE EXERCISE & 2x2 GRID (Steps 22-24, 33-34) ==================== */
+.top-photo-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  margin-bottom: 16px;
+  border: 1px solid var(--border-subtle);
+}
+
+.top-photo-card img {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.exercise-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(5, 3, 0, 0.78);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(235, 225, 211, 0.25);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.grid-2x2-text {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.grid-2x2-text .answer-card {
+  min-height: 76px;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+}
+
+/* ==================== SURFACE CARDS & INTERSTITIALS ==================== */
+.surface-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.media-frame {
+  border-radius: 18px;
+  overflow: hidden;
+  background: #14120e;
+  margin-bottom: 18px;
+  border: 1px solid var(--border-subtle);
+}
+
+.media-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==================== STEP 17: 4-WEEK ANIMATED BAR CHART ==================== */
+.four-week-card {
+  background: var(--bg-answer);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 28px 12px 14px;
+  margin: 14px 0;
+}
+
+.four-week-bars {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 1fr 1fr 1.2fr;
+  gap: 6px;
+  align-items: end;
+  min-height: 215px;
+}
+
+.fw-today-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.fw-today-box {
+  width: 100%;
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  border-radius: 12px;
+  padding: 10px 4px 8px;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.2;
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(235, 225, 211, 0.35);
+  animation: todayRing 2.2s ease-out infinite;
+}
+
+@keyframes todayRing {
+  0% { box-shadow: 0 0 0 0 rgba(235, 225, 211, 0.38); }
+  70% { box-shadow: 0 0 0 12px rgba(235, 225, 211, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(235, 225, 211, 0); }
+}
+
+.fw-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.fw-bar {
+  width: 100%;
+  height: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 0.69rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+  position: relative;
+  transition: height 0.7s var(--ease-out);
+  overflow: visible;
+}
+
+.fw-bar.w1 { background: #333027; }
+.fw-bar.w2 { background: #464231; }
+.fw-bar.w3 { background: #5a5538; }
+.fw-bar.w4 {
+  background: var(--accent-olive);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.fw-trophy {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #5b5539;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.fw-pill {
+  width: 100%;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 2px;
+  border-radius: 6px;
+  background: #2f2c24;
+  color: var(--text-secondary);
+}
+
+.fw-pill.w4 {
+  background: var(--accent-olive);
+  color: #fff;
+}
+
+/* ==================== STEP 21: FITNESS SCORE BREAKDOWN ==================== */
+.score-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.score-pill {
+  background: var(--accent-olive-light);
+  border: 1px solid var(--accent-olive);
+  color: var(--text-primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.score-metric {
+  margin-bottom: 14px;
+}
+
+.score-metric:last-child {
+  margin-bottom: 0;
+}
+
+.score-metric-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+.score-metric-top strong {
+  color: var(--text-primary);
+}
+
+.score-segs-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.score-seg {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(235, 225, 211, 0.14);
+  overflow: hidden;
+}
+
+.score-seg-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-olive);
+  border-radius: 999px;
+  transition: width 0.7s var(--ease-out);
+}
+
+/* ==================== STEP 37: HEALTH CONSENT & CORAL ALERT ==================== */
+.alert-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--status-alert-bg);
+  border: 1px solid var(--status-alert);
+  color: #ffd5d8;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  animation: bmEnter 0.25s ease;
+}
+
+.alert-banner[hidden] {
+  display: none;
+}
+
+.alert-close {
+  background: transparent;
+  border: none;
+  color: var(--status-alert);
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.consent-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--text-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ==================== STEP 40: MEAL PLAN PREVIEW ==================== */
+.meal-phone-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-tertiary);
+  border-radius: 22px;
+  padding: 18px 14px;
+  margin-bottom: 16px;
+}
+
+.meal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--bg-answer);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.meal-row strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.meal-row small {
+  font-size: 0.76rem;
+  color: var(--text-tertiary);
+}
+
+/* ==================== STEPS 41-44: NUMERIC INPUTS + UNIT TOGGLE ==================== */
+.unit-toggle {
+  display: inline-flex;
+  background: var(--bg-answer);
+  border: 1px solid var(--border-tertiary);
+  border-radius: 999px;
+  padding: 3px;
+  margin: 0 auto 24px;
+}
+
+.unit-toggle-wrap {
+  text-align: center;
+}
+
+.unit-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.unit-btn.is-active {
+  background: var(--text-primary);
+  color: var(--text-inverse);
+}
+
+.underline-field-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0 8px;
+}
+
+.underline-input {
+  width: 170px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--input-underline);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2.3rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 6px 4px;
+  outline: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  transition: border-color 0.2s;
+}
+
+.underline-input::-webkit-outer-spin-button,
+.underline-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.underline-input:focus {
+  border-bottom-color: var(--text-primary);
+}
+
+.underline-input::placeholder {
+  color: rgba(235, 225, 211, 0.34);
+  font-size: 1.55rem;
+  font-weight: 500;
+}
+
+.underline-unit {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.ft-in-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+}
+
+.ft-in-row .underline-input {
+  width: 82px;
+}
+
+.field-hint {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin: 6px 0 14px;
+}
+
+.field-error {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--status-alert);
+  min-height: 20px;
+  margin-bottom: 8px;
+}
+
+.live-feedback-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-tertiary);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-top: 10px;
+  animation: bmEnter 0.28s var(--ease-out);
+}
+
+.live-feedback-card.positive {
+  border-color: rgba(58, 174, 146, 0.45);
+  background: var(--status-positive-bg);
+}
+
+.live-feedback-card.warning {
+  border-color: rgba(136, 131, 66, 0.65);
+  background: var(--accent-olive-light);
+}
+
+.live-feedback-card strong {
+  display: block;
+  font-size: 0.92rem;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.live-feedback-card p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* ==================== STEP 45 & 56: LOADERS ==================== */
+.bar-loader-item {
+  margin-bottom: 14px;
+}
+
+.bar-loader-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.bar-loader-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(235, 225, 211, 0.14);
+  overflow: hidden;
+}
+
+.bar-loader-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: var(--text-primary);
+  transition: width 0.12s linear;
+}
+
+.award-carousel {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-top: 18px;
+  padding-bottom: 6px;
+}
+
+.award-slide {
+  flex: 0 0 88%;
+  scroll-snap-align: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+
+.ring-wrap {
+  position: relative;
+  width: 146px;
+  height: 146px;
+  margin: 10px auto 18px;
+}
+
+.ring-pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* ==================== STEP 46: BMI WELLNESS PROFILE (EXACT step_119.png) ==================== */
+.bmi-panel {
+  background: var(--bg-answer);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 18px 16px 0;
+  overflow: hidden;
+}
+
+.bmi-callout-area {
+  position: relative;
+  height: 44px;
+  margin-top: 8px;
+}
+
+.bmi-pill-float {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: left 0.4s var(--ease-out);
+}
+
+.bmi-pill-float::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  width: 2px;
+  height: 14px;
+  background: var(--text-primary);
+  transform: translateX(-50%);
+}
+
+.bmi-scale-nums {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+.bmi-rainbow-wrap {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.bmi-rainbow {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7dd3fc 0%, #86efac 32%, #fde047 64%, #f87171 100%);
+}
+
+.bmi-dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+}
+
+.bmi-cats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+.bmi-cats .active {
+  color: var(--text-primary);
+}
+
+.bmi-risk-box {
+  background: rgba(136, 131, 66, 0.2);
+  border: 1px solid rgba(136, 131, 66, 0.55);
+  border-radius: 14px;
+  padding: 13px 14px;
+  margin-bottom: 16px;
+}
+
+.bmi-risk-box strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.bmi-risk-box p {
+  margin: 0;
+  font-size: 0.79rem;
+  color: var(--text-secondary);
+  line-height: 1.42;
+}
+
+.bmi-bottom-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 8px;
+  align-items: end;
+}
+
+.bmi-attr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 18px;
+}
+
+.bmi-attr-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.bmi-attr-row svg {
+  width: 22px;
+  height: 22px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.bmi-attr-row small {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+}
+
+.bmi-attr-row strong {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.info-i-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(235, 225, 211, 0.25);
+  color: var(--text-primary);
+  font-size: 0.7rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bmi-avatar-right img {
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 12px 12px 0 0;
+}
+
+/* ==================== STEP 49: DARK CALENDAR PICKER ==================== */
+.date-trigger-btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--input-underline);
+  padding: 12px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.calendar-popup {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-tertiary);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cal-head strong {
+  font-size: 0.94rem;
+  text-transform: capitalize;
+}
+
+.cal-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border-tertiary);
+  background: var(--bg-answer);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.cal-dow {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  padding: 4px 0;
+}
+
+.cal-day {
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cal-day:hover:not(:disabled) {
+  background: var(--bg-tertiary);
+}
+
+.cal-day.is-selected {
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  font-weight: 800;
+}
+
+.cal-day:disabled {
+  color: rgba(235, 225, 211, 0.2);
+  cursor: default;
+}
+
+/* ==================== STEP 50: EXPERT QUOTE CARD ==================== */
+.quote-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.quote-avatar {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 2px solid var(--accent-olive);
+}
+
+.quote-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.94rem;
+  line-height: 1.52;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.event-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-olive-light);
+  border: 1px solid var(--accent-olive);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin: 0 auto 14px;
+}
+
+/* ==================== STEP 57: EMAIL INPUT ==================== */
+.email-input-box {
+  width: 100%;
+  height: 54px;
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border-tertiary);
+  background: var(--bg-answer);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  margin-bottom: 12px;
+  transition: border-color 0.16s;
+}
+
+.email-input-box:focus {
+  border-color: var(--text-primary);
+}
+
+.email-input-box::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ==================== STEP 60: START TODAY OLIVE GLOW SPLASH ==================== */
+.splash-olive-stage {
+  min-height: calc(100dvh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 24px 12px;
+}
+
+.splash-olive-glow {
+  position: fixed;
+  left: 50%;
+  bottom: -140px;
+  transform: translateX(-50%);
+  width: 460px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(136, 131, 66, 0.52) 0%, rgba(136, 131, 66, 0.14) 45%, transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.splash-phrase {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.24;
+  color: var(--text-primary);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+/* ==================== STEP 61: PERFORATED OLIVE SCRATCH TICKET (EXACT step_160.png) ==================== */
+.ticket-outer {
+  position: relative;
+  width: 268px;
+  height: 356px;
+  margin: 18px auto 20px;
+  border-radius: 22px;
+  background: var(--accent-olive);
+  padding: 12px;
+  box-shadow: 0 18px 46px rgba(136, 131, 66, 0.28);
+  user-select: none;
+  touch-action: none;
+}
+
+/* Side circular ticket notches */
+.ticket-notch-l,
+.ticket-notch-r {
+  position: absolute;
+  bottom: 84px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  z-index: 5;
+}
+
+.ticket-notch-l { left: -12px; }
+.ticket-notch-r { right: -12px; }
+
+.ticket-dash-line {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 95px;
+  border-top: 3px dashed var(--bg-primary);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.ticket-top-pane {
+  position: relative;
+  width: 100%;
+  height: 232px;
+  border-radius: 14px;
+  border: 1px solid rgba(235, 225, 211, 0.28);
+  overflow: hidden;
+  background: #1d1b15;
+}
+
+.ticket-reveal-under {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  background: linear-gradient(160deg, #25221a, #14120d);
+}
+
+.ticket-reveal-pct {
+  font-family: var(--font-display);
+  font-size: 3.1rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.ticket-reveal-under span {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.ticket-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.ticket-hand-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+  animation: handSwipe 1.8s ease-in-out infinite;
+}
+
+@keyframes handSwipe {
+  0%, 100% { transform: translate(-75%, 0) rotate(-8deg); }
+  50% { transform: translate(15%, -10px) rotate(8deg); }
+}
+
+.ticket-bottom-stub {
+  margin-top: 28px;
+  height: 68px;
+  border-radius: 12px;
+  border: 1px solid rgba(235, 225, 211, 0.28);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(5, 3, 0, 0.82);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ==================== STICKY BOTTOM CTA BAR ==================== */
+.bm-sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-subtle);
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+}
+
+.bm-sticky-cta[hidden] {
+  display: none;
+}
+
+.bm-sticky-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.bm-btn-primary {
+  width: 100%;
+  height: var(--btn-height);
+  border: none;
+  border-radius: var(--radius-btn);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.16s ease, transform 0.12s ease;
+}
+
+.bm-btn-primary:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.bm-btn-primary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+.bm-btn-primary:disabled {
+  opacity: 0.34;
+  cursor: not-allowed;
+}
+
+.bm-btn-skip {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 4px 10px;
+}
+
+.bm-btn-skip:hover {
+  color: var(--text-primary);
+}
+
+/* ==================== FLOATING HELP BUTTON & DRAWERS ==================== */
+.help-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 18px;
+  z-index: 38;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+}
+
+.help-fab[hidden] {
+  display: none;
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0, 0, 0, 0.74);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.drawer-backdrop.center-modal {
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+}
+
+.drawer-backdrop[hidden] {
+  display: none;
+}
+
+.drawer-panel {
+  width: 290px;
+  max-width: 84vw;
+  height: 100%;
+  background: #14120e;
+  border-left: 1px solid var(--border-tertiary);
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.drawer-panel h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.drawer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+  border-radius: 12px;
+  background: var(--bg-answer);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 360px;
+  background: #1a1813;
+  border: 1px solid var(--border-tertiary);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-box h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.modal-box p {
+  margin: 0 0 16px;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+}
+
+/* Footer legal note on Step 1 */
+.legal-footer-s1 {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.legal-footer-s1 strong {
+  color: var(--text-primary);
+}
+
+.checklist-summary {
+  border: 1px solid var(--border-tertiary);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.checklist-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  background: var(--bg-answer);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.checklist-row:last-child {
+  border-bottom: none;
+}
+
+.checklist-row svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-olive);
+  flex-shrink: 0;
+}
+
+
+/* ==================== DATA DINÂMICA SOBRE A IMAGEM br_references (Step 2) ==================== */
+/* A etiqueta "Seu início · 25 de novembro" está desenhada na imagem; esta camada cobre e mostra a data de hoje. */
+.date-chip-frame { position: relative; container-type: inline-size; }
+.date-chip-cover {
+  position: absolute; left: 5.6%; top: 3.9%; width: 39.2%; height: 6%;
+  border-radius: 999px; background: #1e1a16; box-shadow: 0 0 6px 4px #1e1a16; pointer-events: none;
+}
+.date-chip {
+  position: absolute; left: 6.4%; top: 4.5%; height: 4.9%; min-height: 18px;
+  display: flex; align-items: center; padding: 0 2.2%;
+  border-radius: 999px; background: #F6E5CD; color: #0d0a07;
+  font-family: Georgia, 'Times New Roman', serif; font-weight: 700; white-space: nowrap;
+  font-size: clamp(11px, 2.9cqw, 28px); letter-spacing: -.01em; pointer-events: none;
+}

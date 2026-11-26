@@ -9,6 +9,13 @@
 
   // Mantém só os slides reais (o original trazia cópias para o modo em laço).
   Array.prototype.slice.call(list.querySelectorAll('.splide__slide--clone')).forEach(function (n) { n.remove(); });
+  // 25/11: sem as telas de alimentação (refeição e ingredientes) — some o slide e a bolinha dele
+  Array.prototype.slice.call(list.querySelectorAll('.splide__slide')).forEach(function (n) {
+    if (n.querySelector('img[src*="app-refeicao"], img[src*="app-ingredientes"]')) {
+      var d = root.parentNode.querySelector('[aria-controls="' + n.id + '"]'); if (d) (d.closest('li') || d).remove();
+      n.remove();
+    }
+  });
   var slides = Array.prototype.slice.call(list.querySelectorAll('.splide__slide'));
   var dots = Array.prototype.slice.call(root.parentNode.querySelectorAll('[aria-controls^="splide02-slide"]'));
   if (!slides.length) return;
