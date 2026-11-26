@@ -1312,7 +1312,7 @@
       '<h2 class="bm-title center">' + esc(step.title) + '</h2>' +
       '<div class="bmi-panel">' +
         '<div style="font-size:1.05rem;font-weight:700;margin-bottom:4px;">Índice de Massa Corporal (IMC)</div>' +
-        '<div class="bmi-callout-area"><div class="bmi-pill-float" style="left:' + pct + '%;">Você - ' + bmi.toFixed(2).replace('.', ',') + '</div></div>' +
+        '<div class="bmi-callout-area"><div class="bmi-pill-float" style="left:clamp(50px, ' + pct + '%, calc(100% - 50px));">Você - ' + bmi.toFixed(2).replace('.', ',') + '</div><span class="bmi-pill-tick" style="left:' + pct + '%;"></span></div>' +
         '<div class="bmi-scale-nums"><span>15</span><span>18,5</span><span>25</span><span>30</span><span>40</span></div>' +
         '<div class="bmi-rainbow-wrap"><div class="bmi-rainbow"></div><div class="bmi-dot" style="left:' + pct + '%;"></div></div>' +
         '<div class="bmi-cats">' +
