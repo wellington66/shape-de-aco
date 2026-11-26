@@ -254,7 +254,7 @@ window.TREINO_DE_ACO_STEPS = [
     type: 'infoFourWeeks',
     header: 'brand',
     title: 'Apenas quatro semanas para ficar irreconhecível',
-    sub: 'Este não é mais um "segunda-feira eu começo". Seu desafio foi criado para você <strong>sentir a diferença desde o primeiro dia</strong>.<br><br>Nossos treinos de Calistenia Militar são curtos, intensos e cabem até na rotina mais corrida.<br><br>Na <strong>4ª semana</strong>, a disposição volta a ser a dos 20 — e quem está do seu lado percebe a diferença.',
+    sub: 'Este não é mais um "segunda-feira eu começo". Seu desafio foi criado para você <strong>sentir a diferença desde o primeiro dia</strong>.<br><br>Nossos treinos de Calistenia Militar são curtos, intensos e cabem até na rotina mais corrida.<br><br><strong>SEMANA 4:</strong> corpo definido e <strong>abdômen trincado</strong>, energia dos 20, e até sua esposa nota a diferença.',
     cta: 'CONTINUAR'
   },
 
@@ -468,7 +468,7 @@ window.TREINO_DE_ACO_STEPS = [
     type: 'infoPhoto',
     header: 'brand',
     title: 'Abasteça seu dia com energia constante',
-    sub: 'Sessões curtas de Calistenia Militar ativam a circulação, despertam o vigor e a libido de forma natural e acabam com o cansaço no meio da tarde — sem depender de café o dia inteiro. A vitalidade de um homem não some: ela só precisa do estímulo certo.',
+    sub: 'A Calistenia Militar reacende sua <strong>energia</strong>, sua <strong>libido</strong> e sua <strong>testosterona</strong> 🔥 A vitalidade de um homem nunca some, ela só precisa do estímulo certo para despertar.<br><br>Você não precisa recorrer a reposição hormonal, remédios ou <strong>métodos invasivos.</strong> Descubra como desbloquear sua força bruta e desejo sexual de forma natural.',
     image: 'assets/img/shoulder_stretch.webp',
     cta: 'CONTINUAR'
   },
@@ -652,7 +652,7 @@ window.TREINO_DE_ACO_STEPS = [
       { value: 'Metabolismo mais lento', label: 'Metabolismo mais lento com a idade', icon: '⏳' },
       { value: 'Estresse financeiro', label: 'Desafios financeiros', icon: '📉' },
       { value: 'Outros eventos estressantes', label: 'Outros momentos de estresse', icon: '⚡' },
-      { value: 'Queda de disposição e libido', label: 'Menos disposição e libido', icon: '🔋' },
+      { value: 'Desempenho sexual caiu', label: 'Meu desempenho sexual caiu', icon: '😮‍💨' },
       { value: 'Nenhuma das anteriores', label: 'Nenhuma das anteriores', icon: '✓', exclusive: true }
     ]
   },
@@ -743,7 +743,6 @@ window.TREINO_DE_ACO_STEPS = [
       { value: 'Fortalecer imunidade', label: 'Fortalecer a saúde e a imunidade' },
       { value: 'Mais força no dia a dia', label: 'Ter mais força para tarefas do dia a dia' },
       { value: 'Mais saúde e energia', label: 'Sentir-me mais saudável e cheio de energia' },
-      { value: 'Recuperar vigor e libido', label: 'Recuperar o vigor, a libido e a confiança' },
       { value: 'Outro', label: 'Outro motivo' }
     ]
   },

@@ -219,7 +219,7 @@
 
   function querLibido() {
     var A = state.answers, has = function (k, v) { return (A[k] || []).indexOf(v) >= 0; };
-    return has('objetivosExtras', 'Aumentar vigor e libido') || has('eventosPassados', 'Queda de disposição e libido') || has('motivacoes', 'Recuperar vigor e libido');
+    return has('objetivosExtras', 'Aumentar vigor e libido') || has('eventosPassados', 'Desempenho sexual caiu');
   }
 
   function getAvatarByBuild() {
@@ -1305,7 +1305,7 @@
     var metab = soma === 'Ectomorfo' ? 'Acelerado' : soma === 'Endomorfo' ? 'Lento, tende a acumular gordura' : 'Moderado, responde rápido ao treino';
     var riskText = cat.healthy
       ? 'Seu IMC está na faixa saudável! Manter massa muscular ativa e baixa gordura visceral protege sua energia e saúde a longo prazo.'
-      : 'Pressão alta, maior risco cardiovascular, resistência à insulina, fadiga constante, queda de testosterona e de libido e sobrecarga nas costas e articulações.';
+      : 'Com um IMC de ' + bmi.toFixed(1).replace('.', ',') + ', o peso extra está sobrecarregando suas articulações e freando sua produção de testosterona. Pressão alta, maior risco cardiovascular, resistência à insulina e fadiga constante.';
 
     wrap.innerHTML =
       '<h2 class="bm-title center">' + esc(step.title) + '</h2>' +
@@ -1329,6 +1329,7 @@
             '<div class="bmi-attr-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg><div><small>Biotipo</small><strong>' + esc(soma) + ' <button type="button" class="info-i-btn" id="btn-soma-info" aria-label="Sobre o biotipo">i</button></strong></div></div>' +
             '<div class="bmi-attr-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 19v-7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v7M4 15h16M8 10V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4"/></svg><div><small>Estilo de vida</small><strong>' + esc(state.answers.diaTipico || 'Sedentário') + '</strong></div></div>' +
             '<div class="bmi-attr-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c.5 4-2 6-2 9a4 4 0 1 0 8 0c0-3-2-5-2-9-1 2-2.5 3-4 0z"/></svg><div><small>Metabolismo</small><strong>' + metab + '</strong></div></div>' +
+            '<div class="bmi-attr-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3"/></svg><div><small>🧪 Nível de testosterona</small><strong>Abaixo do normal</strong></div></div>' +
           '</div>' +
           '<div class="bmi-avatar-right"><img src="' + getAvatarByBuild() + '" alt="Seu perfil físico"></div>' +
         '</div>' +
@@ -1659,7 +1660,7 @@
       '<div class="checklist-summary">' +
         '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Calibrado para nível ' + sc.level + ' (' + esc(state.answers.duracaoTreino || '15-20 min') + '/dia)</span></div>' +
         '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>100% personalizado com base nas suas respostas</span></div>' +
-        (querLibido() ? '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Foco extra em vigor, libido e disposição</span></div>' : '') +
+        (querLibido() ? '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Aumento natural de testosterona, energia e virilidade</span></div>' : '') +
         '<div class="checklist-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg><span>Meta: ' + goalVerb + ' ' + diffKg.toFixed(0) + ' kg até ' + fmtDateFull(goalDate) + '*</span></div>' +
       '</div>' +
       '<p style="font-size:0.72rem;color:var(--text-tertiary);text-align:center;margin-top:10px;">*Gráfico e prazo ilustrativos. Resultados variam conforme dedicação e alimentação.</p>';
