@@ -45,7 +45,6 @@
   if (!LOCAL) {
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1566100141500586'); fbq('track', 'PageView');
-    if (kind === 'checkoutPersonalized') fbq('track', 'ViewContent', { content_name: 'Desafio Treino de Aço - checkout', currency: 'BRL', value: 29.90 });
   }
   document.addEventListener('click', function (e) {
     if (/email/.test(kind) && e.target.closest('[data-test*="goNext"]')) { fb('track', 'Lead'); ga('event', 'generate_lead', { currency: 'BRL', value: 0 }); cl('event', 'lead'); }
@@ -69,10 +68,6 @@
     // etiquetas do Clarity: filtrar gravações e mapas de calor por etapa, origem e campanha
     cl('set', 'etapa', etapa);
     ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content'].forEach(function (k) { if (qs.get(k)) cl('set', k, qs.get(k)); });
-    if (kind === 'checkoutPersonalized') {
-      ga('event', 'view_item', { currency: 'BRL', value: 29.90, items: [{ item_id: '38ynh82', item_name: 'Desafio Treino de Aço - 28 dias', price: 29.90 }] });
-      cl('event', 'viu_checkout');
-    }
   }
 
   // ---- checkout: botões levam à oferta da Cakto do plano escolhido ----
@@ -85,19 +80,11 @@
       var sec = b.closest('[data-test^="checkoutChoosePlan__base"]') || document;
       var sel = sec.querySelector('[data-test^="PlanItem-"][data-selected="true"]') || document.querySelector('[data-test^="PlanItem-"][data-selected="true"]');
       var o = OF[sel ? sel.getAttribute('data-test') : 'PlanItem-Plano-de-4-Semanas'] || OF['PlanItem-Plano-de-4-Semanas'];
-      // InitiateCheckout fica só com a Cakto (dispara ao abrir o checkout); disparar aqui também contava em dobro
-      // checkout atual: Wiapy (um link por plano). Os códigos curtos antigos (pmotdrk, 38ynh82, qjk7tw4) continuam como chave interna do plano.
-      var url = 'https://pay.wiapy.com/' + { pmotdrk: 'wnqwKqL0b3fc', '38ynh82': '5jGsM3YvdZxi', qjk7tw4: 'LFVM1ODpEndQ' }[o[0]] + location.search;
-      // painel de rastreio: registra a ida ao checkout e leva a sessão (alsid) e as utm para a venda voltar ligada à visita
-      if (window.alCheckout) url = window.alCheckout(url, { pmotdrk: '7d', '38ynh82': '28d', qjk7tw4: '90d' }[o[0]]);
+      // este botão só leva até o formulário (que está na própria página). NÃO é início de checkout:
+      // o início é marcado no checkout.js quando a pessoa começa a digitar.
       var plano = { pmotdrk: '7 dias', '38ynh82': '28 dias', qjk7tw4: '90 dias' }[o[0]];
-      cl('set', 'plano', plano); cl('event', 'clicou_checkout');
-      // GA manda por beacon; o callback (ou 800 ms) garante o envio antes de sair para a Cakto
-      var foi = false; function ir() { if (!foi) { foi = true; try { localStorage.setItem('sda_tentou', String(Date.now())); } catch (e) {} if (window.ckAbrir) window.ckAbrir(o[0]); else location.href = url; } }
-      if (window.gtag && !LOCAL) {
-        gtag('event', 'begin_checkout', { currency: 'BRL', value: o[1], items: [{ item_id: o[0], item_name: 'Desafio Treino de Aço - ' + plano, price: o[1] }], transport_type: 'beacon', event_callback: ir });
-        setTimeout(ir, 800);
-      } else ir();
+      cl('set', 'plano', plano); cl('event', 'clicou_botao_comprar');
+      if (window.ckAbrir) window.ckAbrir(o[0]);
     }, true);
   }
 

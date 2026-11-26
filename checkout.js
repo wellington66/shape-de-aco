@@ -11,7 +11,8 @@
   function $(s, r) { return (r || document).querySelector(s); }
   function carregar(src) { return new Promise(function (ok, no) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }); }
   function fp() { try { var k = localStorage.getItem('ck_fp'); if (!k) { k = 'fp_' + uuid(); localStorage.setItem('ck_fp', k); } return k; } catch (e) { return 'fp_' + uuid(); } }
-  function utm() { var q = new URLSearchParams(location.search), o = {}; ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'sck'].forEach(function (k) { if (q.get(k)) o[k] = q.get(k); }); return o; }
+  function utm() { var q = new URLSearchParams(location.search), o = {}; ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'sck'].forEach(function (k) { if (q.get(k)) o[k] = q.get(k); });
+    try { var sid = localStorage.getItem('al_sid'); if (sid && !o.sck) o.sck = 'al_' + sid; } catch (e) {} return o; }
 
   // ---------- estilo: mesmo visual da página (fundo escuro, cartões dos planos, fonte e botão dela) ----------
   var css = document.createElement('style');
@@ -140,9 +141,13 @@
 
   try { var salvo = JSON.parse(localStorage.getItem('ck_dados') || '{}'); ['nome', 'email', 'tel', 'cpf'].forEach(function (k) { if (salvo[k]) $('#ck-' + k).value = salvo[k]; }); } catch (e) {}
 
+  // 'input' só dispara quando alguém escreve (ou o navegador preenche): foco e dados já salvos não contam
+  bg.addEventListener('input', function (e) { var t = e.target; if (t && t.id && t.value) marcarCampo(t.id.replace('ck-', '')); });
+
   bg.querySelectorAll('.ck-met').forEach(function (b) {
     b.addEventListener('click', function () {
       st.metodo = b.getAttribute('data-m');
+      marcarMetodo(st.metodo);
       bg.querySelectorAll('.ck-met').forEach(function (x) { x.classList.toggle('on', x === b); });
       $('#ck-cartao').style.display = st.metodo === 'cartao' ? '' : 'none';
       txtBtn(rotulo());
@@ -150,19 +155,73 @@
     });
   });
 
-  function ev(nome, extra) {
-    var it = { pmotdrk: '7d', '38ynh82': '28d', qjk7tw4: '90d' }, oid = Object.keys(it).filter(function (k) { return it[k] === st.plano; })[0];
-    var dados = { currency: 'BRL', value: st.preco, content_ids: [oid], content_type: 'product', content_name: 'Desafio Treino de Aço - ' + st.nome };
-    try { if (window.fbq) fbq('track', nome, dados, extra || {}); } catch (e) {}
-    try { if (window.clarity) clarity('event', nome); } catch (e) {}
-    try {
-      if (window.gtag) {
-        var g = { InitiateCheckout: 'add_payment_info', Purchase: 'purchase' }[nome];
-        if (g) gtag('event', g, { currency: 'BRL', value: st.preco, transaction_id: (extra && extra.eventID) || undefined, payment_type: st.metodo, items: [{ item_id: oid, item_name: 'Desafio Treino de Aço - ' + st.nome, price: st.preco }] });
-      }
-    } catch (e) {}
+  // ---------- medição do checkout (separada da "oferta vista") ----------
+  // Cada etapa conta 1 vez por visita. NUNCA envia o que a pessoa digitou, só o nome da etapa.
+  var IDS = { '7d': 'pmotdrk', '28d': '38ynh82', '90d': 'qjk7tw4' };
+  var ja = {};
+  function umaVez(k) { if (ja[k]) return false; ja[k] = 1; try { if (sessionStorage.getItem('ckm_' + k)) return false; sessionStorage.setItem('ckm_' + k, '1'); } catch (e) {} return true; }
+  function meta(tipo, nome, dados, extra) { try { if (window.fbq) fbq(tipo, nome, dados, extra || {}); } catch (e) {} }
+  function ga4(nome, p) { try { if (window.gtag) gtag('event', nome, p); } catch (e) {} }
+  function clar(nome) { try { if (window.clarity) clarity('event', nome); } catch (e) {} }
+  // painel: se o al.js ainda não carregou, a etapa fica na fila e ele envia quando chegar
+  function painel(id, rotulo) { if (window.alPasso) window.alPasso(id, rotulo); else (window.alFila = window.alFila || []).push([id, rotulo]); }
+  function painelInicio() { if (window.alPasso) window.alCheckout(location.href, st.plano); else (window.alFila = window.alFila || []).push(['_inicio', st.plano]); }
+  function junta(a, b) { var o = {}, k; for (k in a) o[k] = a[k]; for (k in b) o[k] = b[k]; return o; }
+  function dadosEv(valor) {
+    var oid = IDS[st.plano], v = valor || st.preco, nome = 'Desafio Treino de Aço - ' + st.nome;
+    return { meta: { currency: 'BRL', value: v, content_ids: [oid], content_type: 'product', content_name: nome },
+      ga: { currency: 'BRL', value: v, items: [{ item_id: oid, item_name: nome, price: st.preco }] } };
   }
-  var iniciou = {};
+  // 0. viu a oferta: só quando os PLANOS aparecem na tela (não quando a página abre)
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      if (!es.some(function (e) { return e.isIntersecting; })) return;
+      io.disconnect();
+      if (!umaVez('oferta')) return;
+      var d = dadosEv(); meta('track', 'ViewContent', d.meta); ga4('view_item', d.ga); clar('ck_viu_oferta');
+    }, { threshold: 0.25 });
+    document.querySelectorAll('[data-test="checkoutChoosePlan__planListContainer"]').forEach(function (el) { io.observe(el); });
+  })();
+
+  // 1. começou a preencher = início de checkout
+  function marcarInicio() {
+    if (!umaVez('inicio')) return;
+    var d = dadosEv();
+    meta('track', 'InitiateCheckout', d.meta); ga4('begin_checkout', d.ga); clar('ck_inicio');
+    painelInicio(); painel('ck_inicio', 'Começou a preencher o checkout');
+  }
+  // 2. cada campo que começou a digitar
+  var CAMPOS = { nome: ['nome', 'nome'], email: ['email', 'e-mail'], tel: ['tel', 'WhatsApp'], cpf: ['cpf', 'CPF'], num: ['dcartao', 'dados do cartão'], val: ['dcartao', 'dados do cartão'], cvv: ['dcartao', 'dados do cartão'], tit: ['dcartao', 'dados do cartão'] };
+  function marcarCampo(idCampo) {
+    var c = CAMPOS[idCampo]; if (!c) return;
+    marcarInicio();
+    if (!umaVez('campo_' + c[0])) return;
+    ga4('checkout_campo', { campo: c[0] }); clar('ck_' + c[0]); painel('ck_' + c[0], 'Digitou ' + c[1]);
+  }
+  // 3. tocou numa forma de pagamento (o Pix já vem marcado: quem não toca só aparece no clique de pagar)
+  function marcarMetodo(m) {
+    if (!umaVez('metodo_' + m)) return;
+    meta('trackCustom', 'EscolheuPagamento', junta(dadosEv().meta, { metodo: m })); ga4('checkout_metodo', { payment_type: m }); clar('ck_escolheu_' + m);
+    painel('ck_' + m, 'Escolheu ' + (m === 'pix' ? 'Pix' : 'cartão'));
+  }
+  // 4. clicou no botão de pagar com os dados certos
+  function marcarPagar() {
+    var m = st.metodo;
+    marcarInicio();
+    if (!umaVez('pagar_' + m)) return;
+    var d = dadosEv();
+    meta('track', 'AddPaymentInfo', d.meta); ga4('add_payment_info', junta(d.ga, { payment_type: m })); clar('ck_clicou_pagar_' + m);
+    painel('ck_pagar', 'Clicou no botão de pagar'); painel('ck_pagar_' + m, 'Clicou em pagar com ' + (m === 'pix' ? 'Pix' : 'cartão'));
+  }
+  function marcarErro() { if (!umaVez('erro')) return; ga4('checkout_erro', { payment_type: st.metodo }); clar('ck_erro_formulario'); painel('ck_erro', 'Clicou em pagar com dado errado ou faltando'); }
+  function marcarPix() { if (!umaVez('pixgerado')) return; meta('trackCustom', 'PixGerado', dadosEv().meta); ga4('pix_gerado', { currency: 'BRL', value: st.preco }); clar('ck_pix_gerado'); painel('ck_pix_gerado', 'Pix gerado'); }
+  // 5. compra: SÓ com pagamento aprovado. eventID = id do pedido (o mesmo que o painel manda pela API de Conversões)
+  function marcarCompra(id, valor) {
+    try { if (localStorage.getItem('ck_compra_' + id)) return; localStorage.setItem('ck_compra_' + id, '1'); } catch (e) {}
+    var d = dadosEv(valor);
+    meta('track', 'Purchase', d.meta, { eventID: id }); ga4('purchase', junta(d.ga, { transaction_id: id, payment_type: st.metodo })); clar('ck_comprou'); painel('ck_comprou', 'Pagamento aprovado');
+  }
 
   function erro(t) { $('#ck-erro').textContent = t || ''; }
 
@@ -193,9 +252,9 @@
   }
 
   $('#ck-pagar').addEventListener('click', async function () {
-    var btn = this; erro('');
-    var b = dados(); var e = checar(b); if (e) return erro(e);
-    if (!iniciou[st.plano]) { iniciou[st.plano] = 1; ev('InitiateCheckout'); }
+    var btn = this; erro(''); st.silencioso = false;
+    var b = dados(); var e = checar(b); if (e) { marcarErro(); return erro(e); }
+    marcarPagar();
     if (!st.idem) st.idem = uuid();
     b.idem = st.idem;
     btn.disabled = true; txtBtn('AGUARDE…');
@@ -209,6 +268,14 @@
   async function pagarPix(b) {
     var j = await post('pix', b);
     st.pedido = j.id;
+    guardar(j);
+    marcarPix();
+    await telaPix(j);
+  }
+  function guardar(j) { try { localStorage.setItem('ck_pend', JSON.stringify({ id: j.id, qr: j.qr || '', valor: Number(j.valor) || 0, plano: st.plano, metodo: st.metodo, t: Date.now() })); } catch (e) {} }
+  function esquecer() { try { localStorage.removeItem('ck_pend'); } catch (e) {} }
+
+  async function telaPix(j) {
     try { if (!window.QRCode) await carregar('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'); } catch (e) {}
     $('#ck-form').style.display = 'none';
     var box = $('#ck-pix'); box.style.display = '';
@@ -230,21 +297,25 @@
         var a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove();
       }).finally(function () { bt.textContent = 'CÓDIGO COPIADO ✓'; setTimeout(function () { bt.textContent = 'COPIAR CÓDIGO PIX'; }, 2500); });
     });
+    st.valor = Number(j.valor) || 0;
     acompanhar(j.id);
   }
 
   function acompanhar(id) {
     clearInterval(st.timer); var n = 0;
-    st.timer = setInterval(async function () {
-      if (++n > 400) return clearInterval(st.timer); // ~33 min
+    st.consultar = async function () {
       try {
         var r = await fetch(API + 'status?id=' + encodeURIComponent(id), { cache: 'no-store' }); if (!r.ok) return;
         var j = await r.json();
-        if (j.status === 'paid' || j.status === 'authorized') { clearInterval(st.timer); aprovado(); }
-        else if (['refused', 'blocked', 'canceled'].indexOf(j.status) >= 0) { clearInterval(st.timer); recusado(j.motivo); }
+        if (st.pedido !== id) return;
+        if (j.status === 'paid' || j.status === 'authorized') { clearInterval(st.timer); st.consultar = null; aprovado(); }
+        else if (['refused', 'blocked', 'canceled'].indexOf(j.status) >= 0) { clearInterval(st.timer); st.consultar = null; recusado(j.motivo); }
       } catch (e) {}
-    }, 5000);
+    };
+    st.timer = setInterval(function () { if (++n > 400) return clearInterval(st.timer); if (st.consultar) st.consultar(); }, 5000); // ~33 min
   }
+  // voltou do app do banco: confere na hora
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && st.consultar) st.consultar(); });
 
   // ---------- Cartão ----------
   async function prepararSdk() {
@@ -282,18 +353,21 @@
     b.cardToken = tk.cardToken; b.threeDSecure = tres; b.antifraude = sdk.getAntifraudReference();
     var j = await post('cartao', b);
     st.pedido = j.id;
+    st.valor = Number(j.valor) || 0;
     if (j.status === 'paid' || j.status === 'authorized') return aprovado();
     if (['refused', 'blocked', 'canceled'].indexOf(j.status) >= 0) { st.pedido = null; st.idem = null; throw new Error('Pagamento recusado pelo banco. Tente outro cartão ou use o Pix.'); }
     $('#ck-form').style.display = 'none';
     var box = $('#ck-pix'); box.style.display = '';
     box.innerHTML = '<div class="ck-espera"><span class="ck-spin"></span>Processando seu pagamento…</div>';
+    guardar(j);
     acompanhar(j.id);
   }
 
   // ---------- resultado ----------
   function aprovado() {
     if (st.compraOk) return; st.compraOk = 1;
-    ev('Purchase', { eventID: 'ck_' + (st.pedido || uuid()) });
+    if (st.pedido) marcarCompra(st.pedido, st.valor);
+    esquecer();
     try { localStorage.setItem('sda_comprou', String(Date.now())); localStorage.removeItem('ck_dados'); } catch (e) {}
     $('#ck-form').style.display = 'none'; $('#ck-pix').style.display = 'none';
     var f = $('#ck-fim'); f.style.display = '';
@@ -303,8 +377,20 @@
       '<a class="' + btnCls + '" style="display:flex;align-items:center;justify-content:center;text-decoration:none;width:100%" href="' + APP + '"><span class="' + spanCls + '">ACESSAR MEU DESAFIO</span></a>';
   }
   function recusado(m) {
+    esquecer();
+    if (st.silencioso) { st.pedido = null; return; } // Pix antigo vencido: não assusta quem só voltou à página
     st.pedido = null; st.idem = null;
     $('#ck-pix').style.display = 'none'; $('#ck-form').style.display = '';
     erro('Pagamento não aprovado' + (m ? ' (' + m + ')' : '') + '. Tente de novo ou use outra forma.');
   }
+
+  // ---------- retoma um pagamento pendente se a página recarregou (até 24 h) ----------
+  (function retomar() {
+    var p; try { p = JSON.parse(localStorage.getItem('ck_pend') || 'null'); } catch (e) {}
+    if (!p || !p.id) return;
+    if (Date.now() - p.t > 864e5) return esquecer();
+    plano(IDS[p.plano]); st.metodo = p.metodo || 'pix'; st.pedido = p.id; st.valor = p.valor;
+    if (p.metodo === 'pix' && Date.now() - p.t < 30 * 60 * 1000) { telaPix({ id: p.id, qr: p.qr, valor: p.valor }).then(function () { if (st.consultar) st.consultar(); }); } // o código vale 30 min
+    else { st.silencioso = true; acompanhar(p.id); st.consultar(); }
+  })();
 })();

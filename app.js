@@ -1825,7 +1825,6 @@
 
       if (CONFIG.CHECKOUT_URL) {
         var url = CONFIG.CHECKOUT_URL + getPersistedQuery();
-        if (typeof window.alCheckout === 'function') url = window.alCheckout(url, '28d');
         location.href = url;
       } else {
         openInfoModal(
