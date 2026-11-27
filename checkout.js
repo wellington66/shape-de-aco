@@ -17,7 +17,7 @@
   // ---------- estilo: mesmo visual da página (fundo escuro, cartões dos planos, fonte e botão dela) ----------
   var css = document.createElement('style');
   css.textContent = [
-    '#ck{--t:#EBE1D3;--t2:rgba(235,225,211,.62);--ln:rgba(235,225,211,.12);--cd:#201E19;--bg:#050300;--or:#A6A055;width:100%;margin:18px 0 8px;color:var(--t);font-family:gilroyFont,"gilroyFont Fallback",var(--font-aeonik-pro),system-ui,sans-serif;text-align:left;scroll-margin-top:96px}',
+    '#ck{--t:#EBE1D3;--t2:rgba(235,225,211,.62);--ln:rgba(235,225,211,.12);--cd:#201E19;--bg:#050300;--or:#A6A055;width:100%;margin:18px 0 8px;padding:20px 16px 18px;border:1px solid var(--or);border-radius:20px;background:rgba(32,30,25,.28);color:var(--t);font-family:gilroyFont,"gilroyFont Fallback",var(--font-aeonik-pro),system-ui,sans-serif;text-align:left;scroll-margin-top:96px}',
     '#ck *{box-sizing:border-box;font-family:inherit}',
     '.ck-h{font-size:24px;font-weight:600;line-height:1.2;margin:0 0 6px;text-align:center}',
     '.ck-hs{font-size:14px;color:var(--t2);margin:0 0 18px;text-align:center}',
